@@ -1,6 +1,16 @@
 #include <check.h>
 
 int roman_to_arabic(const char *roman) {
+    if (0 == strcmp(roman, "M"))
+        return 1000;
+    if (0 == strcmp(roman, "D"))
+        return 500;
+    if (0 == strcmp(roman, "C"))
+        return 100;
+    if (0 == strcmp(roman, "L"))
+        return 50;
+    if (0 == strcmp(roman, "X"))
+        return 10;
     if (0 == strcmp(roman, "V"))
         return 5;
 
@@ -13,6 +23,11 @@ START_TEST(test_roman_to_arabic) {
     ck_assert(3 == roman_to_arabic("III"));
     //ck_assert(4 == roman_to_arabic("IV"));
     ck_assert(5 == roman_to_arabic("V"));
+    ck_assert(10 == roman_to_arabic("X"));
+    ck_assert(50 == roman_to_arabic("L"));
+    ck_assert(100 == roman_to_arabic("C"));
+    ck_assert(500 == roman_to_arabic("D"));
+    ck_assert(1000 == roman_to_arabic("M"));
 } END_TEST
 
 Suite * roman_numerals_suite(void) {
