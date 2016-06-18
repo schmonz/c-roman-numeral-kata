@@ -1,7 +1,11 @@
 #include <check.h>
 
-START_TEST(test_roman_numerals_create) {
-    ck_assert_msg(1 == 1, "one is not zero");
+int roman_to_arabic(const char *roman) {
+    return 1;
+}
+
+START_TEST(test_roman_to_arabic) {
+    ck_assert(1 == roman_to_arabic("I"));
 } END_TEST
 
 Suite * roman_numerals_suite(void) {
@@ -12,7 +16,7 @@ Suite * roman_numerals_suite(void) {
 
     tc_core = tcase_create("Core");
 
-    tcase_add_test(tc_core, test_roman_numerals_create);
+    tcase_add_test(tc_core, test_roman_to_arabic);
     suite_add_tcase(s, tc_core);
 
     return s;
