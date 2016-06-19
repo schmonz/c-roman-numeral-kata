@@ -1,27 +1,33 @@
 #include <check.h>
 
-int roman_to_arabic(const char *roman) {
-    if (0 == strcmp(roman, "M"))
-        return 1000;
-    if (0 == strcmp(roman, "D"))
-        return 500;
-    if (0 == strcmp(roman, "C"))
-        return 100;
-    if (0 == strcmp(roman, "L"))
-        return 50;
-    if (0 == strcmp(roman, "X"))
-        return 10;
-    if (0 == strcmp(roman, "V"))
-        return 5;
+#define INVALID_ROMAN_NUMERAL -1
 
-    return strlen(roman);
+static int roman_digit_to_arabic(const char *roman_digit) {
+    if (0 == strcmp(roman_digit, "M"))
+        return 1000;
+    if (0 == strcmp(roman_digit, "D"))
+        return 500;
+    if (0 == strcmp(roman_digit, "C"))
+        return 100;
+    if (0 == strcmp(roman_digit, "L"))
+        return 50;
+    if (0 == strcmp(roman_digit, "X"))
+        return 10;
+    if (0 == strcmp(roman_digit, "V"))
+        return 5;
+    if (0 == strcmp(roman_digit, "I"))
+        return 1;
+
+    return INVALID_ROMAN_NUMERAL;
+}
+
+static int roman_to_arabic(const char *roman) {
+    return roman_digit_to_arabic(roman);
 }
 
 START_TEST(test_roman_to_arabic) {
+    ck_assert(INVALID_ROMAN_NUMERAL == roman_to_arabic("R"));
     ck_assert(1 == roman_to_arabic("I"));
-    ck_assert(2 == roman_to_arabic("II"));
-    ck_assert(3 == roman_to_arabic("III"));
-    //ck_assert(4 == roman_to_arabic("IV"));
     ck_assert(5 == roman_to_arabic("V"));
     ck_assert(10 == roman_to_arabic("X"));
     ck_assert(50 == roman_to_arabic("L"));
