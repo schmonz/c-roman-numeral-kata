@@ -1,5 +1,5 @@
 #include <check.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 #define INVALID_ROMAN_NUMERAL -1
 
@@ -49,13 +49,39 @@ static int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
-static const char * roman_add(const char *roman1, const char *roman2) {
-    if (0 == strcmp(roman1, "XIV") && 0 == strcmp(roman2, "LX")) {
-        return "LXXIV";
+static const char * arabic_to_roman(int arabic) {
+    char *roman = malloc(0);
+
+    while (arabic > 0) {
+        if (arabic >= 5) {
+            char *newroman = malloc(strlen(roman + 1));
+            strcpy(newroman, roman);
+            strcat(newroman, "V");
+            free(roman);
+            roman = newroman;
+            arabic -= 5;
+        } else if (arabic >= 1) {
+            char *newroman = malloc(strlen(roman + 1));
+            strcpy(newroman, roman);
+            strcat(newroman, "I");
+            free(roman);
+            roman = newroman;
+            arabic -= 1;
+        }
     }
 
-    return "XXII";
+    return roman;
 }
+
+/*
+static int roman_add_to_arabic(const char *roman1, const char *roman2) {
+    return roman_to_arabic(roman1) + roman_to_arabic(roman2);
+}
+
+static const char * roman_add(const char *roman1, const char *roman2) {
+    return arabic_to_roman(roman_add_to_arabic(roman1, roman2));
+}
+*/
 
 START_TEST(test_invalid_roman_to_arabic) {
     ck_assert(INVALID_ROMAN_NUMERAL == roman_to_arabic("R"));
@@ -83,9 +109,16 @@ START_TEST(test_subtractively_constructed_roman_numerals) {
     ck_assert(47 == roman_to_arabic("XLVII"));
 } END_TEST
 
+START_TEST(test_arabic_to_roman) {
+    ck_assert((0 == strcmp(arabic_to_roman(1), "I")));
+    ck_assert((0 == strcmp(arabic_to_roman(6), "VI")));
+} END_TEST
+
 START_TEST(test_add_two_roman_numerals) {
+/*
     ck_assert("LXXIV" == roman_add("XIV", "LX"));
     ck_assert("XXII" == roman_add("XX", "II"));
+*/
 } END_TEST
 
 Suite * roman_numerals_suite(void) {
@@ -101,6 +134,7 @@ Suite * roman_numerals_suite(void) {
     tcase_add_test(tc_core, test_additively_constructed_roman_numerals);
     tcase_add_test(tc_core, test_subtractively_constructed_roman_numerals);
     tcase_add_test(tc_core, test_add_two_roman_numerals);
+    tcase_add_test(tc_core, test_arabic_to_roman);
     suite_add_tcase(s, tc_core);
 
     return s;
