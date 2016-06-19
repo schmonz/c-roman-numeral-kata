@@ -1,4 +1,5 @@
 #include <check.h>
+#include <stdio.h>
 
 #define INVALID_ROMAN_NUMERAL -1
 
@@ -22,13 +23,24 @@ static int roman_digit_to_arabic(const char *roman_digit) {
 }
 
 static int roman_to_arabic(const char *roman) {
-    return roman_digit_to_arabic(roman);
+    int arabic = 0;
+
+    for (int i = strlen(roman) - 1; i >= 0; i--) {
+        char roman_digit[2];
+        strncpy(roman_digit, roman+i, 1);
+        roman_digit[1] = '\0';
+        arabic += roman_digit_to_arabic(roman_digit);
+    }
+
+    return arabic;
 }
 
 START_TEST(test_roman_to_arabic) {
     ck_assert(INVALID_ROMAN_NUMERAL == roman_to_arabic("R"));
     ck_assert(1 == roman_to_arabic("I"));
+    ck_assert(2 == roman_to_arabic("II"));
     ck_assert(5 == roman_to_arabic("V"));
+    ck_assert(8 == roman_to_arabic("VIII"));
     ck_assert(10 == roman_to_arabic("X"));
     ck_assert(50 == roman_to_arabic("L"));
     ck_assert(100 == roman_to_arabic("C"));
