@@ -24,28 +24,55 @@ static int roman_digit_to_arabic(const char *roman_digit) {
 
 static int roman_to_arabic(const char *roman) {
     int arabic = 0;
+    int previous_digit_value = 0;
 
     for (int i = strlen(roman) - 1; i >= 0; i--) {
+        int this_digit_value;
         char roman_digit[2];
+
         strncpy(roman_digit, roman+i, 1);
         roman_digit[1] = '\0';
-        arabic += roman_digit_to_arabic(roman_digit);
+
+        this_digit_value = roman_digit_to_arabic(roman_digit);
+
+        if (this_digit_value == INVALID_ROMAN_NUMERAL) {
+            return INVALID_ROMAN_NUMERAL;
+        } else if (this_digit_value < previous_digit_value) {
+            arabic -= this_digit_value;
+        } else {
+            arabic += this_digit_value;
+        }
+
+        previous_digit_value = this_digit_value;
     }
 
     return arabic;
 }
 
-START_TEST(test_roman_to_arabic) {
+START_TEST(test_invalid_roman_to_arabic) {
     ck_assert(INVALID_ROMAN_NUMERAL == roman_to_arabic("R"));
+    ck_assert(INVALID_ROMAN_NUMERAL == roman_to_arabic("VIIR"));
+} END_TEST
+
+START_TEST(test_valid_roman_digits_to_arabic) {
     ck_assert(1 == roman_to_arabic("I"));
-    ck_assert(2 == roman_to_arabic("II"));
     ck_assert(5 == roman_to_arabic("V"));
-    ck_assert(8 == roman_to_arabic("VIII"));
     ck_assert(10 == roman_to_arabic("X"));
     ck_assert(50 == roman_to_arabic("L"));
     ck_assert(100 == roman_to_arabic("C"));
     ck_assert(500 == roman_to_arabic("D"));
     ck_assert(1000 == roman_to_arabic("M"));
+} END_TEST
+
+START_TEST(test_additively_constructed_roman_numerals) {
+    ck_assert(2 == roman_to_arabic("II"));
+    ck_assert(8 == roman_to_arabic("VIII"));
+} END_TEST
+
+START_TEST(test_subtractively_constructed_roman_numerals) {
+    ck_assert(4 == roman_to_arabic("IV"));
+    ck_assert(1990 == roman_to_arabic("MCMXC"));
+    ck_assert(47 == roman_to_arabic("XLVII"));
 } END_TEST
 
 Suite * roman_numerals_suite(void) {
@@ -56,7 +83,10 @@ Suite * roman_numerals_suite(void) {
 
     tc_core = tcase_create("Core");
 
-    tcase_add_test(tc_core, test_roman_to_arabic);
+    tcase_add_test(tc_core, test_invalid_roman_to_arabic);
+    tcase_add_test(tc_core, test_valid_roman_digits_to_arabic);
+    tcase_add_test(tc_core, test_additively_constructed_roman_numerals);
+    tcase_add_test(tc_core, test_subtractively_constructed_roman_numerals);
     suite_add_tcase(s, tc_core);
 
     return s;
