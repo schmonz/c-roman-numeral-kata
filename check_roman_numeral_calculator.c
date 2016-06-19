@@ -49,33 +49,39 @@ static int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
-static char * _build_up_roman(char *roman, int increment, char *roman_value) {
-        char *newroman = malloc(strlen(roman) + strlen(roman_value));
-        strcpy(newroman, roman);
-        strcat(newroman, roman_value);
-        free(roman);
-        return newroman;
+static char * arabic_increment_to_roman(int arabic_increment) {
+    if (10 == arabic_increment)
+        return "X";
+    if (9 == arabic_increment)
+        return "IX";
+    if (5 == arabic_increment)
+        return "V";
+    if (4 == arabic_increment)
+        return "IV";
+
+    return "I";
+}
+
+static char * _build_up_roman(char *roman, int arabic_increment) {
+    char *roman_value = arabic_increment_to_roman(arabic_increment);
+    char *newroman = malloc(strlen(roman) + strlen(roman_value));
+    strcpy(newroman, roman);
+    strcat(newroman, roman_value);
+    free(roman);
+    return newroman;
 }
 
 static const char * arabic_to_roman(int arabic) {
     char *roman = malloc(0);
+    char arabics[] = { 10, 9, 5, 4, 1 };
 
     while (arabic > 0) {
-        if (arabic >= 10) {
-            roman = _build_up_roman(roman, 10, "X");
-            arabic -= 10;
-        } else if (arabic >= 9) {
-            roman = _build_up_roman(roman, 9, "IX");
-            arabic -= 9;
-        } else if (arabic >= 5) {
-            roman = _build_up_roman(roman, 5, "V");
-            arabic -= 5;
-        } else if (arabic >= 4) {
-            roman = _build_up_roman(roman, 4, "IV");
-            arabic -= 4;
-        } else if (arabic >= 1) {
-            roman = _build_up_roman(roman, 1, "I");
-            arabic -= 1;
+        for (int i = 0; i < sizeof(arabics); i++) {
+            int this_arabic = arabics[i];
+            if (arabic >= this_arabic) {
+                roman = _build_up_roman(roman, this_arabic);
+                arabic -= this_arabic;
+            }
         }
     }
 
