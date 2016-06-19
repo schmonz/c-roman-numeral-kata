@@ -95,15 +95,9 @@ static const char * arabic_to_roman(int arabic) {
     return roman;
 }
 
-/*
-static int roman_add_to_arabic(const char *roman1, const char *roman2) {
-    return roman_to_arabic(roman1) + roman_to_arabic(roman2);
-}
-
 static const char * roman_add(const char *roman1, const char *roman2) {
-    return arabic_to_roman(roman_add_to_arabic(roman1, roman2));
+    return arabic_to_roman(roman_to_arabic(roman1) + roman_to_arabic(roman2));
 }
-*/
 
 START_TEST(test_invalid_roman_to_arabic) {
     ck_assert_int_eq(INVALID_ROMAN_NUMERAL, roman_to_arabic("R"));
@@ -142,10 +136,8 @@ START_TEST(test_arabic_to_roman) {
 } END_TEST
 
 START_TEST(test_add_two_roman_numerals) {
-/*
-    ck_assert("LXXIV" == roman_add("XIV", "LX"));
-    ck_assert("XXII" == roman_add("XX", "II"));
-*/
+    ck_assert_str_eq("LXXIV", roman_add("XIV", "LX"));
+    ck_assert_str_eq("XXII", roman_add("XX", "II"));
 } END_TEST
 
 Suite * roman_numerals_suite(void) {
