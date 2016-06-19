@@ -85,7 +85,7 @@ static const char * arabic_to_roman(int arabic) {
     while (arabic > 0) {
         for (int i = 0; i < arabics_length; i++) {
             int this_arabic = arabics[i];
-            if (arabic >= this_arabic) {
+            while (arabic >= this_arabic) {
                 roman = _build_up_roman(roman, this_arabic);
                 arabic -= this_arabic;
             }
@@ -136,6 +136,8 @@ START_TEST(test_arabic_to_roman) {
     ck_assert_str_eq(arabic_to_roman(6), "VI");
     ck_assert_str_eq(arabic_to_roman(4), "IV");
     ck_assert_str_eq(arabic_to_roman(9), "IX");
+    ck_assert_str_eq(arabic_to_roman(22), "XXII");
+    ck_assert_str_eq(arabic_to_roman(74), "LXXIV");
     ck_assert_str_eq(arabic_to_roman(1999), "MCMXCIX");
 } END_TEST
 
