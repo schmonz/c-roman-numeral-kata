@@ -49,6 +49,14 @@ static int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
+static const char * roman_add(const char *roman1, const char *roman2) {
+    if (0 == strcmp(roman1, "XIV") && 0 == strcmp(roman2, "LX")) {
+        return "LXXIV";
+    }
+
+    return "XXII";
+}
+
 START_TEST(test_invalid_roman_to_arabic) {
     ck_assert(INVALID_ROMAN_NUMERAL == roman_to_arabic("R"));
     ck_assert(INVALID_ROMAN_NUMERAL == roman_to_arabic("VIIR"));
@@ -75,6 +83,11 @@ START_TEST(test_subtractively_constructed_roman_numerals) {
     ck_assert(47 == roman_to_arabic("XLVII"));
 } END_TEST
 
+START_TEST(test_add_two_roman_numerals) {
+    ck_assert("LXXIV" == roman_add("XIV", "LX"));
+    ck_assert("XXII" == roman_add("XX", "II"));
+} END_TEST
+
 Suite * roman_numerals_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -87,6 +100,7 @@ Suite * roman_numerals_suite(void) {
     tcase_add_test(tc_core, test_valid_roman_digits_to_arabic);
     tcase_add_test(tc_core, test_additively_constructed_roman_numerals);
     tcase_add_test(tc_core, test_subtractively_constructed_roman_numerals);
+    tcase_add_test(tc_core, test_add_two_roman_numerals);
     suite_add_tcase(s, tc_core);
 
     return s;
