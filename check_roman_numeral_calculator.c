@@ -49,23 +49,32 @@ static int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
+static char * _build_up_roman(char *roman, int increment, char *roman_value) {
+        char *newroman = malloc(strlen(roman) + strlen(roman_value));
+        strcpy(newroman, roman);
+        strcat(newroman, roman_value);
+        free(roman);
+        return newroman;
+}
+
 static const char * arabic_to_roman(int arabic) {
     char *roman = malloc(0);
 
     while (arabic > 0) {
-        if (arabic >= 5) {
-            char *newroman = malloc(strlen(roman + 1));
-            strcpy(newroman, roman);
-            strcat(newroman, "V");
-            free(roman);
-            roman = newroman;
+        if (arabic >= 10) {
+            roman = _build_up_roman(roman, 10, "X");
+            arabic -= 10;
+        } else if (arabic >= 9) {
+            roman = _build_up_roman(roman, 9, "IX");
+            arabic -= 9;
+        } else if (arabic >= 5) {
+            roman = _build_up_roman(roman, 5, "V");
             arabic -= 5;
+        } else if (arabic >= 4) {
+            roman = _build_up_roman(roman, 4, "IV");
+            arabic -= 4;
         } else if (arabic >= 1) {
-            char *newroman = malloc(strlen(roman + 1));
-            strcpy(newroman, roman);
-            strcat(newroman, "I");
-            free(roman);
-            roman = newroman;
+            roman = _build_up_roman(roman, 1, "I");
             arabic -= 1;
         }
     }
@@ -112,6 +121,9 @@ START_TEST(test_subtractively_constructed_roman_numerals) {
 START_TEST(test_arabic_to_roman) {
     ck_assert_str_eq(arabic_to_roman(1), "I");
     ck_assert_str_eq(arabic_to_roman(6), "VI");
+    ck_assert_str_eq(arabic_to_roman(4), "IV");
+    ck_assert_str_eq(arabic_to_roman(9), "IX");
+    //ck_assert_str_eq(arabic_to_roman(1999), "MCMXCIX");
 } END_TEST
 
 START_TEST(test_add_two_roman_numerals) {
