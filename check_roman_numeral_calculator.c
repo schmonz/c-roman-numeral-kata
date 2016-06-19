@@ -50,16 +50,22 @@ static int roman_to_arabic(const char *roman) {
 }
 
 static char * arabic_increment_to_roman(int arabic_increment) {
-    if (10 == arabic_increment)
-        return "X";
-    if (9 == arabic_increment)
-        return "IX";
-    if (5 == arabic_increment)
-        return "V";
-    if (4 == arabic_increment)
-        return "IV";
-
-    return "I";
+    switch (arabic_increment) {
+        case 1000:  return  "M";
+        case 900:   return "CM";
+        case 500:   return  "D";
+        case 400:   return "CD";
+        case 100:   return  "C";
+        case 90:    return "XC";
+        case 50:    return  "L";
+        case 40:    return "XL";
+        case 10:    return  "X";
+        case  9:    return "IX";
+        case  5:    return  "V";
+        case  4:    return "IV";
+        case  1:    return  "I";
+        default:    return   "";
+    }
 }
 
 static char * _build_up_roman(char *roman, int arabic_increment) {
@@ -73,10 +79,11 @@ static char * _build_up_roman(char *roman, int arabic_increment) {
 
 static const char * arabic_to_roman(int arabic) {
     char *roman = malloc(0);
-    char arabics[] = { 10, 9, 5, 4, 1 };
+    int arabics[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+    int arabics_length = sizeof(arabics) / sizeof(arabics[0]);
 
     while (arabic > 0) {
-        for (int i = 0; i < sizeof(arabics); i++) {
+        for (int i = 0; i < arabics_length; i++) {
             int this_arabic = arabics[i];
             if (arabic >= this_arabic) {
                 roman = _build_up_roman(roman, this_arabic);
@@ -129,7 +136,7 @@ START_TEST(test_arabic_to_roman) {
     ck_assert_str_eq(arabic_to_roman(6), "VI");
     ck_assert_str_eq(arabic_to_roman(4), "IV");
     ck_assert_str_eq(arabic_to_roman(9), "IX");
-    //ck_assert_str_eq(arabic_to_roman(1999), "MCMXCIX");
+    ck_assert_str_eq(arabic_to_roman(1999), "MCMXCIX");
 } END_TEST
 
 START_TEST(test_add_two_roman_numerals) {
