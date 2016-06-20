@@ -7,28 +7,21 @@
  * TODO:
  * push code down from tests to library
  * sprinkle `const`
- * use `char` (and `switch`) for roman_digit
  * test more edge cases
  * split tests as helpful
  */
 
-static int roman_digit_to_arabic(const char *roman_digit) {
-    if (0 == strcmp(roman_digit, "M"))
-        return 1000;
-    if (0 == strcmp(roman_digit, "D"))
-        return 500;
-    if (0 == strcmp(roman_digit, "C"))
-        return 100;
-    if (0 == strcmp(roman_digit, "L"))
-        return 50;
-    if (0 == strcmp(roman_digit, "X"))
-        return 10;
-    if (0 == strcmp(roman_digit, "V"))
-        return 5;
-    if (0 == strcmp(roman_digit, "I"))
-        return 1;
-
-    return INVALID_ROMAN_NUMERAL;
+static int roman_digit_to_arabic(const char roman_digit) {
+    switch (roman_digit) {
+        case 'M': return 1000;
+        case 'D': return  500;
+        case 'C': return  100;
+        case 'L': return   50;
+        case 'X': return   10;
+        case 'V': return    5;
+        case 'I': return    1;
+        default:  return INVALID_ROMAN_NUMERAL;
+    }
 }
 
 static int roman_to_arabic(const char *roman) {
@@ -36,13 +29,7 @@ static int roman_to_arabic(const char *roman) {
     int previous_digit_value = 0;
 
     for (int i = strlen(roman) - 1; i >= 0; i--) {
-        int this_digit_value;
-        char roman_digit[2];
-
-        strncpy(roman_digit, roman+i, 1);
-        roman_digit[1] = '\0';
-
-        this_digit_value = roman_digit_to_arabic(roman_digit);
+        int this_digit_value = roman_digit_to_arabic(roman[i]);
 
         if (this_digit_value == INVALID_ROMAN_NUMERAL) {
             return INVALID_ROMAN_NUMERAL;
