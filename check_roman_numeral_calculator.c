@@ -3,6 +3,15 @@
 
 #define INVALID_ROMAN_NUMERAL -1
 
+/*
+ * TODO:
+ * push code down from tests to library
+ * sprinkle `const`
+ * use `char` (and `switch`) for roman_digit
+ * test more edge cases
+ * split tests as helpful
+ */
+
 static int roman_digit_to_arabic(const char *roman_digit) {
     if (0 == strcmp(roman_digit, "M"))
         return 1000;
@@ -52,18 +61,18 @@ static int roman_to_arabic(const char *roman) {
 static char * arabic_increment_to_roman(int arabic_increment) {
     switch (arabic_increment) {
         case 1000:  return  "M";
-        case 900:   return "CM";
-        case 500:   return  "D";
-        case 400:   return "CD";
-        case 100:   return  "C";
-        case 90:    return "XC";
-        case 50:    return  "L";
-        case 40:    return "XL";
-        case 10:    return  "X";
-        case  9:    return "IX";
-        case  5:    return  "V";
-        case  4:    return "IV";
-        case  1:    return  "I";
+        case  900:  return "CM";
+        case  500:  return  "D";
+        case  400:  return "CD";
+        case  100:  return  "C";
+        case   90:  return "XC";
+        case   50:  return  "L";
+        case   40:  return "XL";
+        case   10:  return  "X";
+        case    9:  return "IX";
+        case    5:  return  "V";
+        case    4:  return "IV";
+        case    1:  return  "I";
         default:    return   "";
     }
 }
@@ -109,39 +118,39 @@ START_TEST(test_invalid_roman_to_arabic) {
 } END_TEST
 
 START_TEST(test_valid_roman_digits_to_arabic) {
-    ck_assert_int_eq(1, roman_to_arabic("I"));
-    ck_assert_int_eq(5, roman_to_arabic("V"));
-    ck_assert_int_eq(10, roman_to_arabic("X"));
-    ck_assert_int_eq(50, roman_to_arabic("L"));
-    ck_assert_int_eq(100, roman_to_arabic("C"));
-    ck_assert_int_eq(500, roman_to_arabic("D"));
-    ck_assert_int_eq(1000, roman_to_arabic("M"));
+    ck_assert_int_eq(   1, roman_to_arabic(    "I"));
+    ck_assert_int_eq(   5, roman_to_arabic(    "V"));
+    ck_assert_int_eq(  10, roman_to_arabic(    "X"));
+    ck_assert_int_eq(  50, roman_to_arabic(    "L"));
+    ck_assert_int_eq( 100, roman_to_arabic(    "C"));
+    ck_assert_int_eq( 500, roman_to_arabic(    "D"));
+    ck_assert_int_eq(1000, roman_to_arabic(    "M"));
 } END_TEST
 
 START_TEST(test_additively_constructed_roman_numerals) {
-    ck_assert_int_eq(2, roman_to_arabic("II"));
-    ck_assert_int_eq(8, roman_to_arabic("VIII"));
+    ck_assert_int_eq(   2, roman_to_arabic(   "II"));
+    ck_assert_int_eq(   8, roman_to_arabic( "VIII"));
 } END_TEST
 
 START_TEST(test_subtractively_constructed_roman_numerals) {
-    ck_assert_int_eq(4, roman_to_arabic("IV"));
+    ck_assert_int_eq(   4, roman_to_arabic(   "IV"));
     ck_assert_int_eq(1990, roman_to_arabic("MCMXC"));
-    ck_assert_int_eq(47, roman_to_arabic("XLVII"));
+    ck_assert_int_eq(  47, roman_to_arabic("XLVII"));
 } END_TEST
 
 START_TEST(test_arabic_to_roman) {
-    ck_assert_str_eq(arabic_to_roman(1), "I");
-    ck_assert_str_eq(arabic_to_roman(6), "VI");
-    ck_assert_str_eq(arabic_to_roman(4), "IV");
-    ck_assert_str_eq(arabic_to_roman(9), "IX");
-    ck_assert_str_eq(arabic_to_roman(22), "XXII");
-    ck_assert_str_eq(arabic_to_roman(74), "LXXIV");
+    ck_assert_str_eq(arabic_to_roman(   1),       "I");
+    ck_assert_str_eq(arabic_to_roman(   6),      "VI");
+    ck_assert_str_eq(arabic_to_roman(   4),      "IV");
+    ck_assert_str_eq(arabic_to_roman(   9),      "IX");
+    ck_assert_str_eq(arabic_to_roman(  22),    "XXII");
+    ck_assert_str_eq(arabic_to_roman(  74),   "LXXIV");
     ck_assert_str_eq(arabic_to_roman(1999), "MCMXCIX");
 } END_TEST
 
 START_TEST(test_add_two_roman_numerals) {
     ck_assert_str_eq("LXXIV", roman_add("XIV", "LX"));
-    ck_assert_str_eq("XXII", roman_add("XX", "II"));
+    ck_assert_str_eq( "XXII", roman_add( "XX", "II"));
 } END_TEST
 
 START_TEST(test_subtract_two_roman_numerals) {
