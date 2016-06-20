@@ -3,6 +3,9 @@
 
 #define INVALID_ROMAN_NUMERAL -1
 
+const int ARABICS[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+const int ARABICS_LENGTH = sizeof(ARABICS) / sizeof(ARABICS[0]);
+
 /*
  * TODO:
  * push code down from tests to library
@@ -20,6 +23,25 @@ static const int roman_digit_to_arabic(const char roman_digit) {
         case 'V': return    5;
         case 'I': return    1;
         default:  return INVALID_ROMAN_NUMERAL;
+    }
+}
+
+static const char * arabic_increment_to_roman(int arabic_increment) {
+    switch (arabic_increment) {
+        case 1000:  return  "M";
+        case  900:  return "CM";
+        case  500:  return  "D";
+        case  400:  return "CD";
+        case  100:  return  "C";
+        case   90:  return "XC";
+        case   50:  return  "L";
+        case   40:  return "XL";
+        case   10:  return  "X";
+        case    9:  return "IX";
+        case    5:  return  "V";
+        case    4:  return "IV";
+        case    1:  return  "I";
+        default:    return   "";
     }
 }
 
@@ -44,25 +66,6 @@ static const int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
-static const char * arabic_increment_to_roman(int arabic_increment) {
-    switch (arabic_increment) {
-        case 1000:  return  "M";
-        case  900:  return "CM";
-        case  500:  return  "D";
-        case  400:  return "CD";
-        case  100:  return  "C";
-        case   90:  return "XC";
-        case   50:  return  "L";
-        case   40:  return "XL";
-        case   10:  return  "X";
-        case    9:  return "IX";
-        case    5:  return  "V";
-        case    4:  return "IV";
-        case    1:  return  "I";
-        default:    return   "";
-    }
-}
-
 static const char * _build_up_roman(const char *roman, int arabic_increment) {
     const char *roman_value = arabic_increment_to_roman(arabic_increment);
     char *newroman = malloc(strlen(roman) + strlen(roman_value));
@@ -74,12 +77,10 @@ static const char * _build_up_roman(const char *roman, int arabic_increment) {
 
 static const char * arabic_to_roman(int arabic) {
     const char *roman = malloc(0);
-    const int arabics[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-    const int arabics_length = sizeof(arabics) / sizeof(arabics[0]);
 
     while (arabic > 0) {
-        for (int i = 0; i < arabics_length; i++) {
-            int this_arabic = arabics[i];
+        for (int i = 0; i < ARABICS_LENGTH; i++) {
+            int this_arabic = ARABICS[i];
             while (arabic >= this_arabic) {
                 roman = _build_up_roman(roman, this_arabic);
                 arabic -= this_arabic;
