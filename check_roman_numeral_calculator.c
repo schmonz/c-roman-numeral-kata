@@ -37,9 +37,9 @@ static const int roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
     for (int i = 0; i < A2R_LENGTH; i++) {
-        struct a2r this = A2R[i];
-        if (0 == strcmp(as_string, this.roman))
-            return this.arabic;
+        struct a2r each = A2R[i];
+        if (0 == strcmp(as_string, each.roman))
+            return each.arabic;
     }
 
     return INVALID_ROMAN_NUMERAL;
@@ -47,9 +47,9 @@ static const int roman_digit_to_arabic(const char roman_digit) {
 
 static const char * arabic_increment_to_roman(int arabic_increment) {
     for (int i = 0; i < A2R_LENGTH; i++) {
-        struct a2r this = A2R[i];
-        if (arabic_increment == this.arabic)
-            return this.roman;
+        struct a2r each = A2R[i];
+        if (arabic_increment == each.arabic)
+            return each.roman;
     }
 
     return "";
@@ -60,17 +60,17 @@ static const int roman_to_arabic(const char *roman) {
     int previous_digit_value = 0;
 
     for (int i = strlen(roman) - 1; i >= 0; i--) {
-        int this_digit_value = roman_digit_to_arabic(roman[i]);
+        int each_digit_value = roman_digit_to_arabic(roman[i]);
 
-        if (this_digit_value == INVALID_ROMAN_NUMERAL) {
+        if (each_digit_value == INVALID_ROMAN_NUMERAL) {
             return INVALID_ROMAN_NUMERAL;
-        } else if (this_digit_value < previous_digit_value) {
-            arabic -= this_digit_value;
+        } else if (each_digit_value < previous_digit_value) {
+            arabic -= each_digit_value;
         } else {
-            arabic += this_digit_value;
+            arabic += each_digit_value;
         }
 
-        previous_digit_value = this_digit_value;
+        previous_digit_value = each_digit_value;
     }
 
     return arabic;
@@ -90,10 +90,10 @@ static const char * arabic_to_roman(int arabic) {
 
     while (arabic > 0) {
         for (int i = 0; i < A2R_LENGTH; i++) {
-            int this_arabic = A2R[i].arabic;
-            while (arabic >= this_arabic) {
-                roman = _build_up_roman(roman, this_arabic);
-                arabic -= this_arabic;
+            int each_arabic = A2R[i].arabic;
+            while (arabic >= each_arabic) {
+                roman = _build_up_roman(roman, each_arabic);
+                arabic -= each_arabic;
             }
         }
     }
