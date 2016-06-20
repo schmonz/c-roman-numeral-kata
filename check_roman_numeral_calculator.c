@@ -34,16 +34,15 @@ const int A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
  */
 
 static const int roman_digit_to_arabic(const char roman_digit) {
-    switch (roman_digit) {
-        case 'M': return 1000;
-        case 'D': return  500;
-        case 'C': return  100;
-        case 'L': return   50;
-        case 'X': return   10;
-        case 'V': return    5;
-        case 'I': return    1;
-        default:  return INVALID_ROMAN_NUMERAL;
+    const char as_string[] = { roman_digit, '\0' };
+
+    for (int i = 0; i < A2R_LENGTH; i++) {
+        struct a2r this = A2R[i];
+        if (0 == strcmp(as_string, this.roman))
+            return this.arabic;
     }
+
+    return INVALID_ROMAN_NUMERAL;
 }
 
 static const char * arabic_increment_to_roman(int arabic_increment) {
