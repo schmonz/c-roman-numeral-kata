@@ -37,9 +37,8 @@ static const int roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
     for (int i = 0; i < A2R_LENGTH; i++) {
-        struct a2r each = A2R[i];
-        if (0 == strcmp(as_string, each.roman))
-            return each.arabic;
+        if (0 == strcmp(as_string, A2R[i].roman))
+            return A2R[i].arabic;
     }
 
     return INVALID_ROMAN_NUMERAL;
@@ -47,9 +46,8 @@ static const int roman_digit_to_arabic(const char roman_digit) {
 
 static const char * arabic_increment_to_roman(int arabic_increment) {
     for (int i = 0; i < A2R_LENGTH; i++) {
-        struct a2r each = A2R[i];
-        if (arabic_increment == each.arabic)
-            return each.roman;
+        if (arabic_increment == A2R[i].arabic)
+            return A2R[i].roman;
     }
 
     return "";
