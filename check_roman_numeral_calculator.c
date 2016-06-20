@@ -27,10 +27,13 @@ const int A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
 
 /*
  * TODO:
- * reduce duplication
- * push code down from tests to library
+ * write a tiny driver program
+ * extract enough library to make it run
+ * split tests better
  * test more edge cases
- * split tests as helpful
+ * reduce more duplication
+ * try on Ubuntu with gcc, fixing whatever breaks
+ * submit!
  */
 
 static const int roman_digit_to_arabic(const char roman_digit) {
