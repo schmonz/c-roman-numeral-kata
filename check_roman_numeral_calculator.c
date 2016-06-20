@@ -6,12 +6,11 @@
 /*
  * TODO:
  * push code down from tests to library
- * sprinkle `const`
  * test more edge cases
  * split tests as helpful
  */
 
-static int roman_digit_to_arabic(const char roman_digit) {
+static const int roman_digit_to_arabic(const char roman_digit) {
     switch (roman_digit) {
         case 'M': return 1000;
         case 'D': return  500;
@@ -24,7 +23,7 @@ static int roman_digit_to_arabic(const char roman_digit) {
     }
 }
 
-static int roman_to_arabic(const char *roman) {
+static const int roman_to_arabic(const char *roman) {
     int arabic = 0;
     int previous_digit_value = 0;
 
@@ -45,7 +44,7 @@ static int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
-static char * arabic_increment_to_roman(int arabic_increment) {
+static const char * arabic_increment_to_roman(int arabic_increment) {
     switch (arabic_increment) {
         case 1000:  return  "M";
         case  900:  return "CM";
@@ -64,19 +63,19 @@ static char * arabic_increment_to_roman(int arabic_increment) {
     }
 }
 
-static char * _build_up_roman(char *roman, int arabic_increment) {
-    char *roman_value = arabic_increment_to_roman(arabic_increment);
+static const char * _build_up_roman(const char *roman, int arabic_increment) {
+    const char *roman_value = arabic_increment_to_roman(arabic_increment);
     char *newroman = malloc(strlen(roman) + strlen(roman_value));
     strcpy(newroman, roman);
     strcat(newroman, roman_value);
-    free(roman);
+    free((void *)roman);
     return newroman;
 }
 
 static const char * arabic_to_roman(int arabic) {
-    char *roman = malloc(0);
-    int arabics[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-    int arabics_length = sizeof(arabics) / sizeof(arabics[0]);
+    const char *roman = malloc(0);
+    const int arabics[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+    const int arabics_length = sizeof(arabics) / sizeof(arabics[0]);
 
     while (arabic > 0) {
         for (int i = 0; i < arabics_length; i++) {
