@@ -3,11 +3,31 @@
 
 #define INVALID_ROMAN_NUMERAL -1
 
-const int ARABICS[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-const int ARABICS_LENGTH = sizeof(ARABICS) / sizeof(ARABICS[0]);
+struct a2r {
+    const int arabic;
+    const char *roman;
+};
+
+const struct a2r A2R[] = {
+    { 1000,  "M" },
+    {  900, "CM" },
+    {  500,  "D" },
+    {  400, "CD" },
+    {  100,  "C" },
+    {   90, "XC" },
+    {   50,  "L" },
+    {   40, "XL" },
+    {   10,  "X" },
+    {    9, "IX" },
+    {    5,  "V" },
+    {    4, "IV" },
+    {    1,  "I" }
+};
+const int A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
 
 /*
  * TODO:
+ * reduce duplication
  * push code down from tests to library
  * test more edge cases
  * split tests as helpful
@@ -27,22 +47,13 @@ static const int roman_digit_to_arabic(const char roman_digit) {
 }
 
 static const char * arabic_increment_to_roman(int arabic_increment) {
-    switch (arabic_increment) {
-        case 1000:  return  "M";
-        case  900:  return "CM";
-        case  500:  return  "D";
-        case  400:  return "CD";
-        case  100:  return  "C";
-        case   90:  return "XC";
-        case   50:  return  "L";
-        case   40:  return "XL";
-        case   10:  return  "X";
-        case    9:  return "IX";
-        case    5:  return  "V";
-        case    4:  return "IV";
-        case    1:  return  "I";
-        default:    return   "";
+    for (int i = 0; i < A2R_LENGTH; i++) {
+        struct a2r this = A2R[i];
+        if (arabic_increment == this.arabic)
+            return this.roman;
     }
+
+    return "";
 }
 
 static const int roman_to_arabic(const char *roman) {
@@ -79,8 +90,8 @@ static const char * arabic_to_roman(int arabic) {
     const char *roman = malloc(0);
 
     while (arabic > 0) {
-        for (int i = 0; i < ARABICS_LENGTH; i++) {
-            int this_arabic = ARABICS[i];
+        for (int i = 0; i < A2R_LENGTH; i++) {
+            int this_arabic = A2R[i].arabic;
             while (arabic >= this_arabic) {
                 roman = _build_up_roman(roman, this_arabic);
                 arabic -= this_arabic;
