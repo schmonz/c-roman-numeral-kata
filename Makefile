@@ -7,8 +7,8 @@ TEST_LIBS	=  -lcheck
 
 SILENT		= @
 
-check: roman_calculator.a roman_calculator.h check_roman_calculator.c
-	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} ${TEST_LDFLAGS} ${TEST_LIBS} -o ${THE_TESTS} roman_calculator.a check_roman_calculator.c
+check: roman_calculator.a roman_calculator.h check_roman_calculator.c check_roman_calculator_interface.c check_roman_calculator_internals.c
+	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} ${TEST_LDFLAGS} ${TEST_LIBS} -o ${THE_TESTS} roman_calculator.a check_roman_calculator_interface.c check_roman_calculator_internals.c check_roman_calculator.c
 	${SILENT}./${THE_TESTS}
 
 romancalc: roman_calculator.a roman_calculator.h romancalc.c

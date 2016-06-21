@@ -3,6 +3,14 @@
 
 #include "roman_calculator.h"
 
+/*
+ * TODO:
+ * test more edge cases
+ * reduce more duplication
+ * try on Ubuntu with gcc, fixing whatever breaks
+ * submit!
+ */
+
 struct a2r {
     const int arabic;
     const char *roman;
