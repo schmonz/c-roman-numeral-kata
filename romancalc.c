@@ -12,12 +12,15 @@ static int usage(char *progname) {
 int main(int argc, char *argv[]) {
     const char *(*fp)(const char *, const char *);
     if (argc == 4) {
-        if (0 == strcmp(argv[2], "+")) {
-            fp = &roman_add;
-        } else if (0 == strcmp(argv[2], "-")) {
-            fp = &roman_subtract;
-        } else {
-            return usage(argv[0]);
+        switch (argv[2][0]) {
+            case '+':
+                fp = &roman_add;
+                break;
+            case '-':
+                fp = &roman_subtract;
+                break;
+            default:
+                return usage(argv[0]);
         }
         printf("%s\n", fp(argv[1], argv[3]));
         return 0;
