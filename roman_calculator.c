@@ -37,8 +37,9 @@ const int roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
     for (int i = 0; i < A2R_LENGTH; i++) {
-        if (0 == strcmp(as_string, A2R[i].roman))
+        if (0 == strcmp(as_string, A2R[i].roman)) {
             return A2R[i].arabic;
+        }
     }
 
     return INVALID_ROMAN_NUMERAL;
@@ -46,8 +47,9 @@ const int roman_digit_to_arabic(const char roman_digit) {
 
 const char * arabic_increment_to_roman(int arabic_increment) {
     for (int i = 0; i < A2R_LENGTH; i++) {
-        if (arabic_increment == A2R[i].arabic)
+        if (arabic_increment == A2R[i].arabic) {
             return A2R[i].roman;
+        }
     }
 
     return "";
@@ -74,8 +76,7 @@ const int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
-const char * _build_up_roman(const char *roman, int arabic_increment) {
-    const char *roman_value = arabic_increment_to_roman(arabic_increment);
+const char * _build_up_roman(const char *roman, const char *roman_value) {
     char *newroman = malloc(strlen(roman) + strlen(roman_value));
     strcpy(newroman, roman);
     strcat(newroman, roman_value);
@@ -88,10 +89,9 @@ const char * arabic_to_roman(int arabic) {
 
     while (arabic > 0) {
         for (int i = 0; i < A2R_LENGTH; i++) {
-            int each_arabic = A2R[i].arabic;
-            while (arabic >= each_arabic) {
-                roman = _build_up_roman(roman, each_arabic);
-                arabic -= each_arabic;
+            for (int j = A2R[i].arabic; arabic >= j; ) {
+                roman = _build_up_roman(roman, arabic_increment_to_roman(j));
+                arabic -= j;
             }
         }
     }
