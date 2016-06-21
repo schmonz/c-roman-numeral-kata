@@ -1,15 +1,23 @@
-THE_TESTS =	the_tests
+THE_TESTS	=  the_tests
 
-CFLAGS +=	-Wall -Werror
-CFLAGS +=	-I /opt/pkg/include
-LDFLAGS +=	-L /opt/pkg/lib
-LIBS =		-lcheck
+CFLAGS		+= -Wall -Werror
+TEST_CFLAGS	+= -I /opt/pkg/include
+TEST_LDFLAGS	+= -L /opt/pkg/lib
+TEST_LIBS	=  -lcheck
 
-SILENT =	@
+SILENT		= @
 
-check: check_roman_numeral_calculator.c
-	${SILENT}${CC} ${CFLAGS} ${LDFLAGS} ${LIBS} -o ${THE_TESTS} check_roman_numeral_calculator.c
+check: roman_calculator.a check_roman_numeral_calculator.c
+	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} ${TEST_LDFLAGS} ${TEST_LIBS} -o ${THE_TESTS} roman_calculator.a check_roman_numeral_calculator.c
 	${SILENT}./${THE_TESTS}
 
+roman_add: roman_calculator.a roman_calculator.h roman_add.c
+	${SILENT}${CC} ${CFLAGS} -o roman_add roman_calculator.a roman_add.c
+
+roman_calculator.a: roman_calculator.h roman_calculator.c
+	${SILENT}${CC} ${CFLAGS} -c roman_calculator.c
+	${SILENT}ar rc roman_calculator.a roman_calculator.o
+	${SILENT}ranlib roman_calculator.a
+
 clean:
-	${SILENT}rm -f ${THE_TESTS}
+	${SILENT}rm -f ${THE_TESTS} *.a *.o roman_add

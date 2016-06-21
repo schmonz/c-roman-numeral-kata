@@ -1,114 +1,15 @@
 #include <check.h>
-#include <stdlib.h>
 
-#define INVALID_ROMAN_NUMERAL -1
-
-struct a2r {
-    const int arabic;
-    const char *roman;
-};
-
-const struct a2r A2R[] = {
-    { 1000,  "M" },
-    {  900, "CM" },
-    {  500,  "D" },
-    {  400, "CD" },
-    {  100,  "C" },
-    {   90, "XC" },
-    {   50,  "L" },
-    {   40, "XL" },
-    {   10,  "X" },
-    {    9, "IX" },
-    {    5,  "V" },
-    {    4, "IV" },
-    {    1,  "I" }
-};
-const int A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
+#include "roman_calculator.h"
 
 /*
  * TODO:
- * write a tiny driver program
- * extract enough library to make it run
  * split tests better
  * test more edge cases
  * reduce more duplication
  * try on Ubuntu with gcc, fixing whatever breaks
  * submit!
  */
-
-static const int roman_digit_to_arabic(const char roman_digit) {
-    const char as_string[] = { roman_digit, '\0' };
-
-    for (int i = 0; i < A2R_LENGTH; i++) {
-        if (0 == strcmp(as_string, A2R[i].roman))
-            return A2R[i].arabic;
-    }
-
-    return INVALID_ROMAN_NUMERAL;
-}
-
-static const char * arabic_increment_to_roman(int arabic_increment) {
-    for (int i = 0; i < A2R_LENGTH; i++) {
-        if (arabic_increment == A2R[i].arabic)
-            return A2R[i].roman;
-    }
-
-    return "";
-}
-
-static const int roman_to_arabic(const char *roman) {
-    int arabic = 0;
-    int previous_digit_value = 0;
-
-    for (int i = strlen(roman) - 1; i >= 0; i--) {
-        int each_digit_value = roman_digit_to_arabic(roman[i]);
-
-        if (each_digit_value == INVALID_ROMAN_NUMERAL) {
-            return INVALID_ROMAN_NUMERAL;
-        } else if (each_digit_value < previous_digit_value) {
-            arabic -= each_digit_value;
-        } else {
-            arabic += each_digit_value;
-        }
-
-        previous_digit_value = each_digit_value;
-    }
-
-    return arabic;
-}
-
-static const char * _build_up_roman(const char *roman, int arabic_increment) {
-    const char *roman_value = arabic_increment_to_roman(arabic_increment);
-    char *newroman = malloc(strlen(roman) + strlen(roman_value));
-    strcpy(newroman, roman);
-    strcat(newroman, roman_value);
-    free((void *)roman);
-    return newroman;
-}
-
-static const char * arabic_to_roman(int arabic) {
-    const char *roman = malloc(0);
-
-    while (arabic > 0) {
-        for (int i = 0; i < A2R_LENGTH; i++) {
-            int each_arabic = A2R[i].arabic;
-            while (arabic >= each_arabic) {
-                roman = _build_up_roman(roman, each_arabic);
-                arabic -= each_arabic;
-            }
-        }
-    }
-
-    return roman;
-}
-
-static const char * roman_add(const char *roman1, const char *roman2) {
-    return arabic_to_roman(roman_to_arabic(roman1) + roman_to_arabic(roman2));
-}
-
-static const char * roman_subtract(const char *roman1, const char *roman2) {
-    return arabic_to_roman(roman_to_arabic(roman1) - roman_to_arabic(roman2));
-}
 
 START_TEST(test_invalid_roman_to_arabic) {
     ck_assert_int_eq(INVALID_ROMAN_NUMERAL, roman_to_arabic("R"));
