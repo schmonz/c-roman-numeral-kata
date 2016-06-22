@@ -1,6 +1,5 @@
 # TODO
 
-- instead of casting `free(roman)`, stop `const`-ing it
 - `size_t` (or `unsigned`) for array indices
 - check for `malloc()` failure
 - `void _build_up_roman(char **romanp)` and then `_build_up_roman(&roman)`

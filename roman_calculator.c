@@ -68,16 +68,16 @@ int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
-const char * _build_up_roman(const char *roman, const char *roman_value) {
+char * _build_up_roman(char *roman, const char *roman_value) {
     char *newroman = malloc(strlen(roman) + strlen(roman_value));
     strcpy(newroman, roman);
     strcat(newroman, roman_value);
-    free((void *)roman);
+    free(roman);
     return newroman;
 }
 
 const char * arabic_to_roman(int arabic) {
-    const char *roman = malloc(0);
+    char *roman = malloc(0);
 
     while (arabic > 0) {
         for (int i = 0; i < A2R_LENGTH; i++) {
