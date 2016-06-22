@@ -30,21 +30,17 @@ const size_t A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
 int roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
-    for (size_t i = 0; i < A2R_LENGTH; i++) {
-        if (0 == strcmp(as_string, A2R[i].roman)) {
+    for (size_t i = 0; i < A2R_LENGTH; i++)
+        if (0 == strcmp(as_string, A2R[i].roman))
             return A2R[i].arabic;
-        }
-    }
 
     return INVALID_ROMAN_NUMERAL;
 }
 
 const char * arabic_increment_to_roman(int arabic_increment) {
-    for (size_t i = 0; i < A2R_LENGTH; i++) {
-        if (arabic_increment == A2R[i].arabic) {
+    for (size_t i = 0; i < A2R_LENGTH; i++)
+        if (arabic_increment == A2R[i].arabic)
             return A2R[i].roman;
-        }
-    }
 
     return "";
 }
