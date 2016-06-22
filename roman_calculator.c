@@ -77,7 +77,8 @@ char * _build_up_roman(char *roman, const char *roman_value) {
 }
 
 const char * arabic_to_roman(int arabic) {
-    char *roman = malloc(0);
+    char *roman = malloc(1);
+    *roman = '\0';
 
     while (arabic > 0) {
         for (size_t i = 0; i < A2R_LENGTH; i++) {
