@@ -1,7 +1,5 @@
 # TODO
 
-- `arabic_to_roman()` and `roman_{add,subtract}()` alloc but don't free,
-  so they should return pointer to non-`const char` (so caller can free)
 - test more edge cases
 - reduce more duplication
 - try on Ubuntu with `gcc`, fixing whatever breaks

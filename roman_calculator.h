@@ -3,7 +3,7 @@
 
 #define INVALID_ROMAN_NUMERAL -1
 
-const char * roman_add(const char *, const char *);
-const char * roman_subtract(const char *, const char *);
+char * roman_add(const char *, const char *);
+char * roman_subtract(const char *, const char *);
 
 #endif

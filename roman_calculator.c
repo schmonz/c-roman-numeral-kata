@@ -80,7 +80,7 @@ static void append_to_roman(char **romanp, const char *roman_value) {
     strlcat(roman, roman_value, new_length);
 }
 
-static const char * arabic_to_roman(int arabic) {
+static char * arabic_to_roman(int arabic) {
     char *roman;
 
     if (NULL == (roman = malloc(1)))
@@ -100,10 +100,10 @@ static const char * arabic_to_roman(int arabic) {
     return roman;
 }
 
-const char * roman_add(const char *roman1, const char *roman2) {
+char * roman_add(const char *roman1, const char *roman2) {
     return arabic_to_roman(roman_to_arabic(roman1) + roman_to_arabic(roman2));
 }
 
-const char * roman_subtract(const char *roman1, const char *roman2) {
+char * roman_subtract(const char *roman1, const char *roman2) {
     return arabic_to_roman(roman_to_arabic(roman1) - roman_to_arabic(roman2));
 }
