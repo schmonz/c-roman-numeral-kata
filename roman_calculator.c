@@ -5,6 +5,8 @@
 
 #include "roman_calculator.h"
 
+#define NULL_BYTE_LENGTH 1
+
 struct a2r {
     const int arabic;
     const char *roman;
@@ -72,7 +74,7 @@ static void die_on_alloc_failure_even_though_not_test_driven(void) {
 
 static void append_to_roman(char **romanp, const char *roman_value) {
     char *roman = &(**romanp);
-    size_t new_length = 1 + strlen(roman) + strlen(roman_value);
+    size_t new_length = strlen(roman) + strlen(roman_value) + NULL_BYTE_LENGTH;
 
     if (NULL == realloc(roman, new_length))
         die_on_alloc_failure_even_though_not_test_driven();
@@ -83,7 +85,7 @@ static void append_to_roman(char **romanp, const char *roman_value) {
 static char * arabic_to_roman(int arabic) {
     char *roman;
 
-    if (NULL == (roman = malloc(1)))
+    if (NULL == (roman = malloc(NULL_BYTE_LENGTH)))
         die_on_alloc_failure_even_though_not_test_driven();
 
     *roman = '\0';
