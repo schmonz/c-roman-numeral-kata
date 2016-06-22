@@ -70,14 +70,14 @@ static void die_on_alloc_failure_even_though_not_test_driven(void) {
     err(EX_OSERR, NULL);
 }
 
-char * _build_up_roman(char *roman, const char *roman_value) {
+void _build_up_roman(char **romanp, const char *roman_value) {
+    char *roman = &(**romanp);
     size_t new_length = 1 + strlen(roman) + strlen(roman_value);
 
     if (NULL == realloc(roman, new_length))
         die_on_alloc_failure_even_though_not_test_driven();
 
     strlcat(roman, roman_value, new_length);
-    return roman;
 }
 
 const char * arabic_to_roman(int arabic) {
@@ -91,7 +91,7 @@ const char * arabic_to_roman(int arabic) {
     while (arabic > 0) {
         for (size_t i = 0; i < A2R_LENGTH; i++) {
             for (int j = A2R[i].arabic; arabic >= j; ) {
-                roman = _build_up_roman(roman, arabic_increment_to_roman(j));
+                _build_up_roman(&roman, arabic_increment_to_roman(j));
                 arabic -= j;
             }
         }
