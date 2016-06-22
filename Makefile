@@ -1,6 +1,6 @@
 THE_TESTS	=  check_roman_calculator
 
-CFLAGS		+= -Wall -Werror
+CFLAGS		+= -Wall -Werror -Wextra -std=c99
 TEST_CFLAGS	+= -I /opt/pkg/include
 TEST_LDFLAGS	+= -L /opt/pkg/lib
 TEST_LIBS	=  -lcheck
