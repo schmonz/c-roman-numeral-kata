@@ -2,8 +2,7 @@
 
 - test more edge cases
 - reduce more duplication
-- try on Ubuntu with `gcc`, fixing whatever breaks
-- submit!
+- check once more on Ubuntu, then submit!
 
 ## Neat ideas
 
