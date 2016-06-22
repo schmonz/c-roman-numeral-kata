@@ -1,8 +1,8 @@
 THE_TESTS	=  check_roman_calculator
 
 CFLAGS		+= -Wall -Werror -Wextra -std=c99
-TEST_CFLAGS	!= pkg-config --cflags check
-TEST_LIBS	!= pkg-config --libs check
+TEST_CFLAGS	:= $(shell pkg-config --cflags check)
+TEST_LIBS	:= $(shell pkg-config --libs check)
 
 SILENT		= @
 
