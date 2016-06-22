@@ -6,8 +6,6 @@
 - test more edge cases
 - reduce more duplication
 - try on Ubuntu with `gcc`, fixing whatever breaks
-- if unit tests `#include "roman_calculator.c"`, can I re-add `static`
-  to those units?
 - submit!
 
 ## Neat ideas

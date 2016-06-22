@@ -27,7 +27,7 @@ const struct a2r A2R[] = {
 };
 const size_t A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
 
-int roman_digit_to_arabic(const char roman_digit) {
+static int roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
     for (size_t i = 0; i < A2R_LENGTH; i++)
@@ -37,7 +37,7 @@ int roman_digit_to_arabic(const char roman_digit) {
     return INVALID_ROMAN_NUMERAL;
 }
 
-const char * arabic_increment_to_roman(int arabic_increment) {
+static const char * arabic_increment_to_roman(int arabic_increment) {
     for (size_t i = 0; i < A2R_LENGTH; i++)
         if (arabic_increment == A2R[i].arabic)
             return A2R[i].roman;
@@ -45,7 +45,7 @@ const char * arabic_increment_to_roman(int arabic_increment) {
     return "";
 }
 
-int roman_to_arabic(const char *roman) {
+static int roman_to_arabic(const char *roman) {
     int arabic = 0;
     int previous_digit_value = 0;
 
@@ -70,7 +70,7 @@ static void die_on_alloc_failure_even_though_not_test_driven(void) {
     err(EX_OSERR, NULL);
 }
 
-void _build_up_roman(char **romanp, const char *roman_value) {
+static void _build_up_roman(char **romanp, const char *roman_value) {
     char *roman = &(**romanp);
     size_t new_length = 1 + strlen(roman) + strlen(roman_value);
 
@@ -80,7 +80,7 @@ void _build_up_roman(char **romanp, const char *roman_value) {
     strlcat(roman, roman_value, new_length);
 }
 
-const char * arabic_to_roman(int arabic) {
+static const char * arabic_to_roman(int arabic) {
     char *roman;
 
     if (NULL == (roman = malloc(1)))
