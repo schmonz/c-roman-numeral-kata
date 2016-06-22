@@ -1,5 +1,7 @@
+#include <err.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sysexits.h>
 
 #include "roman_calculator.h"
 
@@ -68,16 +70,26 @@ int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
+static void die_on_alloc_failure_even_though_not_test_driven(void) {
+    err(EX_OSERR, NULL);
+}
+
 char * _build_up_roman(char *roman, const char *roman_value) {
-    char *newroman = malloc(strlen(roman) + strlen(roman_value));
-    strcpy(newroman, roman);
-    strcat(newroman, roman_value);
-    free(roman);
-    return newroman;
+    size_t new_length = 1 + strlen(roman) + strlen(roman_value);
+
+    if (NULL == realloc(roman, new_length))
+        die_on_alloc_failure_even_though_not_test_driven();
+
+    strlcat(roman, roman_value, new_length);
+    return roman;
 }
 
 const char * arabic_to_roman(int arabic) {
-    char *roman = malloc(1);
+    char *roman;
+
+    if (NULL == (roman = malloc(1)))
+        die_on_alloc_failure_even_though_not_test_driven();
+
     *roman = '\0';
 
     while (arabic > 0) {
