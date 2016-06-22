@@ -1,6 +1,5 @@
 # TODO
 
-- `_build_up_roman()` -> `append_to_roman()`
 - `arabic_to_roman()` and `roman_{add,subtract}()` alloc but don't free,
   so they should return pointer to non-`const char` (so caller can free)
 - test more edge cases

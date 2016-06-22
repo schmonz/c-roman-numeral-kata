@@ -70,7 +70,7 @@ static void die_on_alloc_failure_even_though_not_test_driven(void) {
     err(EX_OSERR, NULL);
 }
 
-static void _build_up_roman(char **romanp, const char *roman_value) {
+static void append_to_roman(char **romanp, const char *roman_value) {
     char *roman = &(**romanp);
     size_t new_length = 1 + strlen(roman) + strlen(roman_value);
 
@@ -91,7 +91,7 @@ static const char * arabic_to_roman(int arabic) {
     while (arabic > 0) {
         for (size_t i = 0; i < A2R_LENGTH; i++) {
             for (int j = A2R[i].arabic; arabic >= j; ) {
-                _build_up_roman(&roman, arabic_increment_to_roman(j));
+                append_to_roman(&roman, arabic_increment_to_roman(j));
                 arabic -= j;
             }
         }
