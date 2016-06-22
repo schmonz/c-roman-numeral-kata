@@ -1,14 +1,13 @@
 THE_TESTS	=  check_roman_calculator
 
 CFLAGS		+= -Wall -Werror -Wextra -std=c99
-TEST_CFLAGS	+= -I /opt/pkg/include
-TEST_LDFLAGS	+= -L /opt/pkg/lib
-TEST_LIBS	=  -lcheck
+TEST_CFLAGS	!= pkg-config --cflags check
+TEST_LIBS	!= pkg-config --libs check
 
 SILENT		= @
 
 check: roman_calculator.a roman_calculator.h check_roman_calculator.c check_roman_calculator_interface.c check_roman_calculator_internals.c
-	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} ${TEST_LDFLAGS} ${TEST_LIBS} -o ${THE_TESTS} roman_calculator.a check_roman_calculator_interface.c check_roman_calculator_internals.c check_roman_calculator.c
+	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} -o ${THE_TESTS} roman_calculator.a check_roman_calculator_interface.c check_roman_calculator_internals.c check_roman_calculator.c ${TEST_LIBS}
 	${SILENT}./${THE_TESTS}
 
 romancalc: roman_calculator.h roman_calculator.c romancalc.c
