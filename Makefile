@@ -11,8 +11,8 @@ check: roman_calculator.a roman_calculator.h check_roman_calculator.c check_roma
 	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} ${TEST_LDFLAGS} ${TEST_LIBS} -o ${THE_TESTS} roman_calculator.a check_roman_calculator_interface.c check_roman_calculator_internals.c check_roman_calculator.c
 	${SILENT}./${THE_TESTS}
 
-romancalc: roman_calculator.a roman_calculator.h romancalc.c
-	${SILENT}${CC} ${CFLAGS} -o romancalc roman_calculator.a romancalc.c
+romancalc: roman_calculator.h roman_calculator.c romancalc.c
+	${SILENT}${CC} ${CFLAGS} -o romancalc roman_calculator.c romancalc.c
 
 roman_calculator.a: roman_calculator.h roman_calculator.c
 	${SILENT}${CC} ${CFLAGS} -c roman_calculator.c

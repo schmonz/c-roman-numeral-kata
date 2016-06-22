@@ -79,7 +79,7 @@ static void append_to_roman(char **romanp, const char *roman_value) {
     if (NULL == realloc(roman, new_length))
         die_on_alloc_failure_even_though_not_test_driven();
 
-    strlcat(roman, roman_value, new_length);
+    strcat(roman, roman_value);
 }
 
 static char * arabic_to_roman(int arabic) {

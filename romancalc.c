@@ -10,19 +10,17 @@ static int usage(char *progname) {
 }
 
 int main(int argc, char *argv[]) {
-    const char *(*fp)(const char *, const char *);
     if (argc == 4) {
         switch (argv[2][0]) {
             case '+':
-                fp = &roman_add;
+                printf("%s\n", roman_add(argv[1], argv[3]));
                 break;
             case '-':
-                fp = &roman_subtract;
+                printf("%s\n", roman_subtract(argv[1], argv[3]));
                 break;
             default:
                 return usage(argv[0]);
         }
-        printf("%s\n", fp(argv[1], argv[3]));
         return 0;
     } else {
         return usage(argv[0]);
