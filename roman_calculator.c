@@ -73,7 +73,7 @@ static void die_on_alloc_failure_even_though_not_test_driven(void) {
 }
 
 static void append_to_roman(char **romanp, const char *roman_value) {
-    char *roman = &(**romanp);
+    char *roman = *romanp;
     size_t new_length = strlen(roman) + strlen(roman_value) + NULL_BYTE_LENGTH;
 
     if (NULL == realloc(roman, new_length))
