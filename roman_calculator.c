@@ -73,11 +73,15 @@ static void not_test_driven_antisocial_process_exit_from_library_call(void) {
 }
 
 static void append_to_roman(char **romanp, const char *roman_value) {
-    char *roman = *romanp;
+    char *roman = *romanp, *new_roman;
     size_t new_length = strlen(roman) + strlen(roman_value) + NULL_BYTE_LENGTH;
 
-    if (NULL == realloc(roman, new_length))
+    if (NULL == (new_roman = realloc(roman, new_length))) {
+        free(roman);
         not_test_driven_antisocial_process_exit_from_library_call();
+    } else {
+        roman = new_roman;
+    }
 
     strcat(roman, roman_value);
 }
