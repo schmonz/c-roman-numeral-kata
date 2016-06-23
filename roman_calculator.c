@@ -68,7 +68,7 @@ static int roman_to_arabic(const char *roman) {
     return arabic;
 }
 
-static void die_on_alloc_failure_even_though_not_test_driven(void) {
+static void not_test_driven_antisocial_process_exit_from_library_call(void) {
     err(EX_OSERR, NULL);
 }
 
@@ -77,7 +77,7 @@ static void append_to_roman(char **romanp, const char *roman_value) {
     size_t new_length = strlen(roman) + strlen(roman_value) + NULL_BYTE_LENGTH;
 
     if (NULL == realloc(roman, new_length))
-        die_on_alloc_failure_even_though_not_test_driven();
+        not_test_driven_antisocial_process_exit_from_library_call();
 
     strcat(roman, roman_value);
 }
@@ -86,7 +86,7 @@ static char * arabic_to_roman(int arabic) {
     char *roman;
 
     if (NULL == (roman = malloc(NULL_BYTE_LENGTH)))
-        die_on_alloc_failure_even_though_not_test_driven();
+        not_test_driven_antisocial_process_exit_from_library_call();
 
     *roman = '\0';
 
