@@ -38,8 +38,8 @@ START_TEST(test_arabic_to_roman) {
     ck_assert_str_eq(arabic_to_roman(1999), "MCMXCIX");
 } END_TEST
 
-TCase* tcase_internals(void) {
-    TCase *tc = tcase_create("Internals");
+TCase* tcase_unit(void) {
+    TCase *tc = tcase_create("Unit Tests");
 
     tcase_add_test(tc, test_invalid_roman_to_arabic);
     tcase_add_test(tc, test_valid_roman_digits_to_arabic);

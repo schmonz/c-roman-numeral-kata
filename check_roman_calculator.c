@@ -1,22 +1,20 @@
 #include <check.h>
 
-TCase* tcase_interface(void);
-TCase* tcase_internals(void);
+TCase* tcase_unit(void);
+TCase* tcase_acceptance(void);
 
 Suite * roman_numerals_suite(void) {
     Suite *s = suite_create("Roman Numeral Calculator");
 
-    suite_add_tcase(s, tcase_interface());
-    suite_add_tcase(s, tcase_internals());
+    suite_add_tcase(s, tcase_unit());
+    suite_add_tcase(s, tcase_acceptance());
 
     return s;
 }
 
 int main(void) {
     int number_failed;
-    SRunner *sr;
-
-    sr = srunner_create(roman_numerals_suite());
+    SRunner *sr = srunner_create(roman_numerals_suite());
     srunner_run_all(sr, CK_NORMAL);
     number_failed = srunner_ntests_failed(sr);
     srunner_free(sr);

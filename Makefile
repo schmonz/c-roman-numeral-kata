@@ -6,8 +6,8 @@ TEST_LIBS	:= $(shell pkg-config --libs check)
 
 SILENT		= @
 
-check: roman_calculator.a roman_calculator.h check_roman_calculator.c check_roman_calculator_interface.c check_roman_calculator_internals.c
-	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} -o ${THE_TESTS} check_roman_calculator_interface.c check_roman_calculator_internals.c check_roman_calculator.c ${TEST_LIBS} roman_calculator.a
+check: roman_calculator.a roman_calculator.h check_roman_calculator.c check_roman_calculator_acceptance.c check_roman_calculator_unit.c
+	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} -o ${THE_TESTS} check_roman_calculator_acceptance.c check_roman_calculator_unit.c check_roman_calculator.c ${TEST_LIBS} roman_calculator.a
 	${SILENT}./${THE_TESTS}
 
 romancalc: roman_calculator.a roman_calculator.h romancalc.c
