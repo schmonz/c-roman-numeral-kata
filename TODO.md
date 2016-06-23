@@ -1,11 +1,6 @@
-# TODO
+# Neat ideas
 
 - test more edge cases
-- reduce more duplication
-- check once more on Ubuntu, then submit!
-
-## Neat ideas
-
 - a fake `malloc()` that can't allocate much, to test-drive failure branches.
   something like:
       void *malloc(size_t n) {
