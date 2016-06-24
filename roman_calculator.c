@@ -49,20 +49,17 @@ static const char * arabic_increment_to_roman(int arabic_increment) {
 
 static int roman_to_arabic(const char *roman) {
     int arabic = 0;
-    int previous_digit_value = 0;
+    int previous = 0;
 
     for (size_t i = strlen(roman); i-- > 0;) {
-        int each_digit_value = roman_digit_to_arabic(roman[i]);
+        int j = roman_digit_to_arabic(roman[i]);
 
-        if (each_digit_value == INVALID_ROMAN_NUMERAL) {
+        if (INVALID_ROMAN_NUMERAL == j)
             return INVALID_ROMAN_NUMERAL;
-        } else if (each_digit_value < previous_digit_value) {
-            arabic -= each_digit_value;
-        } else {
-            arabic += each_digit_value;
-        }
 
-        previous_digit_value = each_digit_value;
+        arabic += (j >= previous) ? j : -j;
+
+        previous = j;
     }
 
     return arabic;
