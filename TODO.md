@@ -1,10 +1,9 @@
 # Neat ideas
 
-- test more edge cases
-- feed test results into Eclipse test runner for red/green
-- alternate implementation: no intermediate arabic numerals!
-- a fake `malloc()` that can't allocate much, to test-drive failure branches.
-  something like:
+- Test overflow and underflow.
+- Test that we can't have four I (etc.) in a row.
+- Test that we handle `malloc` failure, via a fake like:
+
   ```c_cpp
       void *malloc(size_t n) {
         static size_t total;
@@ -17,5 +16,10 @@
         total += n; return omalloc(n);
       }
   ```
-- a corresponding fake `free()` that makes sure the total allocated
-  _would_ go back to zero
+- Test that we `free` what we `malloc`.
+- Use `automake` and `autoconf`
+- Build the library with `libtool`
+- Extract tests, library code, application code to separate subdirs
+    - Provide local `strlcat` (etc.) definition where needed
+- Run tests from Eclipse test runner (via TAP)
+- Try reimplementing _without_ intermediate Arabic numerals!
