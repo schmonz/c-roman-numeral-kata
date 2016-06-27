@@ -18,8 +18,8 @@
   ```
 - Test that we `free` what we `malloc`.
 - Use `automake` and `autoconf`
-- Build the library with `libtool`
-- Extract tests, library code, application code to separate subdirs
-    - Provide local `strlcat` (etc.) definition where needed
-- Run tests from Eclipse test runner (via TAP)
+- Build the library with `libtool`.
+- Extract tests, library code, application code to separate subdirs.
+- Link with local `strlcat` (etc.) definition where needed.
+- Run tests from Eclipse test runner (via TAP).
 - Try reimplementing _without_ intermediate Arabic numerals!
