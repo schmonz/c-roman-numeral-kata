@@ -23,3 +23,4 @@
 - Link with local `strlcat` (etc.) definition where needed.
 - Run tests from Eclipse test runner (via TAP).
 - Try reimplementing _without_ intermediate Arabic numerals!
+- Run valgrind (with forking turned off in the Check tests)
