@@ -15,6 +15,7 @@ Suite * roman_numerals_suite(void) {
 int main(void) {
     int number_failed;
     SRunner *sr = srunner_create(roman_numerals_suite());
+    srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_NORMAL);
     number_failed = srunner_ntests_failed(sr);
     srunner_free(sr);
