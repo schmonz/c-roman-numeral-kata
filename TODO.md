@@ -1,5 +1,8 @@
 # Neat ideas
 
+- Fix memory leaks found by Valgrind.
+- What are `.PHONY` and all that about?
+- Everything `uwe@` said.
 - Test overflow and underflow.
 - Test that we can't have four I (etc.) in a row.
 - Test that we handle `malloc` failure, via a fake like:
@@ -23,4 +26,3 @@
 - Link with local `strlcat` (etc.) definition where needed.
 - Run tests from Eclipse test runner (via TAP).
 - Try reimplementing _without_ intermediate Arabic numerals!
-- Run valgrind (with forking turned off in the Check tests)
