@@ -22,7 +22,7 @@ clean:
 
 .PHONY: all check valgrind clean
 
-check_roman_calculator: ${THE_LIBRARY} check_roman_calculator.c check_roman_calculator_acceptance.c check_roman_calculator_unit.c
+${THE_TESTS}: ${THE_LIBRARY} check_roman_calculator.c check_roman_calculator_acceptance.c check_roman_calculator_unit.c
 	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} -o ${THE_TESTS} check_roman_calculator_acceptance.c check_roman_calculator_unit.c check_roman_calculator.c ${TEST_LIBS} ${THE_LIBRARY}
 
 ${THE_PROGRAM}: ${THE_LIBRARY} roman_calculator.h romancalc.c
