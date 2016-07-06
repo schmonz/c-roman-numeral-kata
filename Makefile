@@ -23,3 +23,4 @@ roman_calculator.a: roman_calculator.h roman_calculator.c
 
 clean:
 	${SILENT}rm -f ${THE_TESTS} *.a *.o romancalc
+	${SILENT}rm -rf *.dSYM
