@@ -6,6 +6,8 @@ TEST_LIBS	:= $(shell pkg-config --libs check)
 
 SILENT		= @
 
+.PHONY: check valgrind clean
+
 check: roman_calculator.a roman_calculator.h check_roman_calculator.c check_roman_calculator_acceptance.c check_roman_calculator_unit.c
 	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} -o ${THE_TESTS} check_roman_calculator_acceptance.c check_roman_calculator_unit.c check_roman_calculator.c ${TEST_LIBS} roman_calculator.a
 	${SILENT}./${THE_TESTS}
