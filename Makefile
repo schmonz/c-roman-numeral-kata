@@ -1,10 +1,12 @@
 THE_TESTS	=  check_roman_calculator
+THE_LIBRARY	=  roman_calculator.a
+THE_PROGRAM	=  romancalc
 
 CFLAGS		+= -g -O0 -Wall -Werror -Wextra -std=c99
 TEST_CFLAGS	:= $(shell pkg-config --cflags check)
 TEST_LIBS	:= $(shell pkg-config --libs check)
 
-SILENT		= @
+SILENT		=  @
 
 all: check
 
@@ -15,18 +17,18 @@ valgrind: ${THE_TESTS}
 	${SILENT}valgrind --leak-check=full --show-leak-kinds=all ./${THE_TESTS}
 
 clean:
-	${SILENT}rm -f ${THE_TESTS} *.a *.o romancalc
+	${SILENT}rm -f *.o ${THE_TESTS} ${THE_LIBRARY} ${THE_PROGRAM}
 	${SILENT}rm -rf *.dSYM
 
 .PHONY: all check valgrind clean
 
-check_roman_calculator: roman_calculator.a check_roman_calculator.c check_roman_calculator_acceptance.c check_roman_calculator_unit.c
-	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} -o ${THE_TESTS} check_roman_calculator_acceptance.c check_roman_calculator_unit.c check_roman_calculator.c ${TEST_LIBS} roman_calculator.a
+check_roman_calculator: ${THE_LIBRARY} check_roman_calculator.c check_roman_calculator_acceptance.c check_roman_calculator_unit.c
+	${SILENT}${CC} ${CFLAGS} ${TEST_CFLAGS} -o ${THE_TESTS} check_roman_calculator_acceptance.c check_roman_calculator_unit.c check_roman_calculator.c ${TEST_LIBS} ${THE_LIBRARY}
 
-romancalc: roman_calculator.a roman_calculator.h romancalc.c
-	${SILENT}${CC} ${CFLAGS} -o romancalc romancalc.c roman_calculator.a
+${THE_PROGRAM}: ${THE_LIBRARY} roman_calculator.h romancalc.c
+	${SILENT}${CC} ${CFLAGS} -o ${THE_PROGRAM} romancalc.c ${THE_LIBRARY}
 
-roman_calculator.a: roman_calculator.h roman_calculator.c
+${THE_LIBRARY}: roman_calculator.h roman_calculator.c
 	${SILENT}${CC} ${CFLAGS} -c roman_calculator.c
-	${SILENT}ar rc roman_calculator.a roman_calculator.o
-	${SILENT}ranlib roman_calculator.a
+	${SILENT}ar rc ${THE_LIBRARY} roman_calculator.o
+	${SILENT}ranlib ${THE_LIBRARY}
