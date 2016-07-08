@@ -1,10 +1,11 @@
 # Neat ideas
 
+- Test that we can't have four I (etc.) in a row.
+- Test overflow and underflow (both Roman and Arabic).
+- Maybe use a union for exception conditions?
 - Fix memory leaks found by Valgrind.
 - What are `.PHONY` and all that about?
 - Everything `uwe@` said.
-- Test overflow and underflow.
-- Test that we can't have four I (etc.) in a row.
 - Test that we handle `malloc` failure, via a fake like:
 
   ```c_cpp
