@@ -130,7 +130,11 @@ static char * roman_operation(char op, const char *roman1, const char *roman2) {
             return arabic_to_roman(arabic1 + arabic2);
             break;
         case '-':
-            return arabic_to_roman(arabic1 - arabic2);
+            if (arabic1 <= arabic2) {
+                return "UNDERFLOW";
+            } else {
+                return arabic_to_roman(arabic1 - arabic2);
+            }
             break;
         default:
             return "";
