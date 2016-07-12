@@ -24,14 +24,18 @@ START_TEST(test_yes_such_thing_as_c_overflow_and_underflow) {
     ck_assert_int_eq(EXPECTED_ARABIC_T_SIZE, sizeof(arabic_t));
 
     thingy = ARABIC_MAX;
-    ck_assert_int_eq(  thingy, ARABIC_MAX);
-    ck_assert_int_eq(++thingy, ARABIC_MIN);
-    ck_assert_int_eq(--thingy, ARABIC_MAX);
+    ck_assert_int_eq(thingy, ARABIC_MAX);
+    ++thingy;
+    ck_assert_int_eq(thingy, ARABIC_MIN);
+    --thingy;
+    ck_assert_int_eq(thingy, ARABIC_MAX);
 
     thingy = ARABIC_MIN;
-    ck_assert_int_eq(  thingy, ARABIC_MIN);
-    ck_assert_int_eq(--thingy, ARABIC_MAX);
-    ck_assert_int_eq(++thingy, ARABIC_MIN);
+    ck_assert_int_eq(thingy, ARABIC_MIN);
+    --thingy;
+    ck_assert_int_eq(thingy, ARABIC_MAX);
+    ++thingy;
+    ck_assert_int_eq(thingy, ARABIC_MIN);
 } END_TEST
 
 START_TEST(test_add_two_roman_numbers) {
