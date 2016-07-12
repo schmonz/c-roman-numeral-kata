@@ -104,12 +104,16 @@ static char * arabic_to_roman(int arabic) {
     return roman;
 }
 
+static char * normalize_roman(const char *roman) {
+    return arabic_to_roman(roman_to_arabic(roman));
+}
+
+static bool would_we_ever_construct_that_roman_number(const char *roman) {
+    return (0 == strcmp(roman, normalize_roman(roman)));
+}
+
 static bool is_valid_roman(const char *roman) {
-    if (0 == strcmp("R", roman)) {
-        return false;
-    } else {
-        return (0 != strcmp("VERYUNLIKELY", roman));
-    }
+    return would_we_ever_construct_that_roman_number(roman);
 }
 
 char * roman_add(const char *roman1, const char *roman2) {

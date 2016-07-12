@@ -4,6 +4,9 @@
 
 START_TEST(test_add_invalid_roman_numbers) {
     ck_assert_str_eq("INVALID", roman_add("V", "R"));
+    ck_assert_str_eq("INVALID", roman_add("ORIOLE", "V"));
+    ck_assert_str_eq("INVALID", roman_add("R", "R"));
+    ck_assert_str_eq("INVALID", roman_add("VIIII", "V"));
 } END_TEST
 
 START_TEST(test_add_two_roman_numbers) {

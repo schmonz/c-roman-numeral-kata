@@ -2,9 +2,26 @@
 
 #include "roman_calculator.c"
 
-START_TEST(test_invalid_roman_to_arabic) {
+START_TEST(test_roman_contains_nonexistent_numerals) {
+    ck_assert_str_eq(                   "", normalize_roman("R"));
     ck_assert_int_eq(INVALID_ROMAN_NUMERAL, roman_to_arabic("R"));
+    ck_assert_str_eq(                   "", normalize_roman("VIIR"));
     ck_assert_int_eq(INVALID_ROMAN_NUMERAL, roman_to_arabic("VIIR"));
+} END_TEST
+
+START_TEST(test_cant_have_more_than_three) {
+    ck_assert_str_eq("III", normalize_roman(  "III"));
+    ck_assert_str_eq( "IV", normalize_roman( "IIII"));
+    ck_assert_str_eq(  "V", normalize_roman("IIIII"));
+    ck_assert_str_eq( "XL", normalize_roman( "XXXX"));
+    ck_assert_str_eq( "CD", normalize_roman( "CCCC"));
+} END_TEST
+
+START_TEST(test_cant_have_more_than_one) {
+    ck_assert_str_eq("V", normalize_roman( "V"));
+    ck_assert_str_eq("X", normalize_roman("VV"));
+    ck_assert_str_eq("C", normalize_roman("LL"));
+    ck_assert_str_eq("M", normalize_roman("DD"));
 } END_TEST
 
 START_TEST(test_valid_roman_digits_to_arabic) {
@@ -41,7 +58,9 @@ START_TEST(test_arabic_to_roman) {
 TCase* tcase_unit(void) {
     TCase *tc = tcase_create("Unit Tests");
 
-    tcase_add_test(tc, test_invalid_roman_to_arabic);
+    tcase_add_test(tc, test_roman_contains_nonexistent_numerals);
+    tcase_add_test(tc, test_cant_have_more_than_three);
+    tcase_add_test(tc, test_cant_have_more_than_one);
     tcase_add_test(tc, test_valid_roman_digits_to_arabic);
     tcase_add_test(tc, test_additively_constructed_roman_numerals);
     tcase_add_test(tc, test_subtractively_constructed_roman_numerals);
