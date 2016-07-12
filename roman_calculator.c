@@ -8,7 +8,7 @@
 
 #define NULL_BYTE_LENGTH 1
 
-typedef int arabic_t;
+typedef unsigned int arabic_t;
 
 struct a2r {
     const arabic_t arabic;
