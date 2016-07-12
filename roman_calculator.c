@@ -124,5 +124,8 @@ char * roman_add(const char *roman1, const char *roman2) {
 }
 
 char * roman_subtract(const char *roman1, const char *roman2) {
+    if (!is_valid_roman(roman1) || !is_valid_roman(roman2))
+        return "INVALID";
+
     return arabic_to_roman(roman_to_arabic(roman1) - roman_to_arabic(roman2));
 }
