@@ -8,8 +8,10 @@
 
 #define NULL_BYTE_LENGTH 1
 
+typedef int arabic_t;
+
 struct a2r {
-    const int arabic;
+    const arabic_t arabic;
     const char *roman;
 };
 
@@ -30,7 +32,7 @@ const struct a2r A2R[] = {
 };
 const size_t A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
 
-static int roman_digit_to_arabic(const char roman_digit) {
+static arabic_t roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
     for (size_t i = 0; i < A2R_LENGTH; i++)
@@ -40,7 +42,7 @@ static int roman_digit_to_arabic(const char roman_digit) {
     return INVALID_ROMAN_NUMERAL;
 }
 
-static const char * arabic_increment_to_roman(int arabic_increment) {
+static const char * arabic_increment_to_roman(arabic_t arabic_increment) {
     for (size_t i = 0; i < A2R_LENGTH; i++)
         if (arabic_increment == A2R[i].arabic)
             return A2R[i].roman;
@@ -48,12 +50,12 @@ static const char * arabic_increment_to_roman(int arabic_increment) {
     return "";
 }
 
-static int roman_to_arabic(const char *roman) {
-    int arabic = 0;
-    int previous = 0;
+static arabic_t roman_to_arabic(const char *roman) {
+    arabic_t arabic = 0;
+    arabic_t previous = 0;
 
     for (size_t i = strlen(roman); i-- > 0;) {
-        int j = roman_digit_to_arabic(roman[i]);
+        arabic_t j = roman_digit_to_arabic(roman[i]);
 
         if (INVALID_ROMAN_NUMERAL == j)
             return INVALID_ROMAN_NUMERAL;
@@ -117,7 +119,7 @@ static bool is_valid_roman(const char *roman) {
 }
 
 static char * roman_operation(char op, const char *roman1, const char *roman2) {
-    int arabic1, arabic2;
+    arabic_t arabic1, arabic2;
 
     if (!is_valid_roman(roman1) || !is_valid_roman(roman2))
         return "INVALID";
