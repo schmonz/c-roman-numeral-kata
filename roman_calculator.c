@@ -116,16 +116,32 @@ static bool is_valid_roman(const char *roman) {
     return would_we_ever_construct_that_roman_number(roman);
 }
 
-char * roman_add(const char *roman1, const char *roman2) {
+static char * roman_operation(char op, const char *roman1, const char *roman2) {
+    int arabic1, arabic2;
+
     if (!is_valid_roman(roman1) || !is_valid_roman(roman2))
         return "INVALID";
 
-    return arabic_to_roman(roman_to_arabic(roman1) + roman_to_arabic(roman2));
+    arabic1 = roman_to_arabic(roman1);
+    arabic2 = roman_to_arabic(roman2);
+
+    switch (op) {
+        case '+':
+            return arabic_to_roman(arabic1 + arabic2);
+            break;
+        case '-':
+            return arabic_to_roman(arabic1 - arabic2);
+            break;
+        default:
+            return "";
+            break;
+    }
+}
+
+char * roman_add(const char *roman1, const char *roman2) {
+    return roman_operation('+', roman1, roman2);
 }
 
 char * roman_subtract(const char *roman1, const char *roman2) {
-    if (!is_valid_roman(roman1) || !is_valid_roman(roman2))
-        return "INVALID";
-
-    return arabic_to_roman(roman_to_arabic(roman1) - roman_to_arabic(roman2));
+    return roman_operation('-', roman1, roman2);
 }
