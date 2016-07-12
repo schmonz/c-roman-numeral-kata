@@ -1,4 +1,5 @@
 #include <err.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sysexits.h>
@@ -103,7 +104,18 @@ static char * arabic_to_roman(int arabic) {
     return roman;
 }
 
+static bool is_valid_roman(const char *roman) {
+    if (0 == strcmp("R", roman)) {
+        return false;
+    } else {
+        return (0 != strcmp("VERYUNLIKELY", roman));
+    }
+}
+
 char * roman_add(const char *roman1, const char *roman2) {
+    if (!is_valid_roman(roman1) || !is_valid_roman(roman2))
+        return "INVALID";
+
     return arabic_to_roman(roman_to_arabic(roman1) + roman_to_arabic(roman2));
 }
 
