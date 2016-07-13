@@ -19,23 +19,18 @@ START_TEST(test_yes_such_thing_as_c_overflow_and_underflow) {
     const int EXPECTED_ARABIC_T_SIZE = 4;
     const arabic_t ARABIC_MAX = -1 + pow(2, 8 * EXPECTED_ARABIC_T_SIZE);
     const arabic_t ARABIC_MIN = 0;
-    arabic_t thingy;
+    arabic_t thingy = ARABIC_MAX;
 
     ck_assert_int_eq(EXPECTED_ARABIC_T_SIZE, sizeof(arabic_t));
 
-    thingy = ARABIC_MAX;
-    ck_assert_int_eq(thingy, ARABIC_MAX);
     ++thingy;
     ck_assert_int_eq(thingy, ARABIC_MIN);
+
     --thingy;
     ck_assert_int_eq(thingy, ARABIC_MAX);
 
-    thingy = ARABIC_MIN;
-    ck_assert_int_eq(thingy, ARABIC_MIN);
-    --thingy;
-    ck_assert_int_eq(thingy, ARABIC_MAX);
-    ++thingy;
-    ck_assert_int_eq(thingy, ARABIC_MIN);
+    thingy += 2;
+    ck_assert_int_eq(thingy, ARABIC_MIN + 1);
 } END_TEST
 
 START_TEST(test_add_two_roman_numbers) {
