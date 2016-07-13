@@ -71,10 +71,11 @@ static void not_test_driven_antisocial_process_exit_from_library_call(void) {
 }
 
 static void append_to_roman(char **romanp, const char *roman_value) {
-    char *roman = *romanp, *new_roman;
+    char *roman = *romanp;
     size_t new_length = strlen(roman) + strlen(roman_value) + NULL_BYTE_LENGTH;
 
-    if (NULL == (new_roman = realloc(roman, new_length))) {
+    char *new_roman = realloc(roman, new_length);
+    if (new_roman == NULL) {
         free(roman);
         not_test_driven_antisocial_process_exit_from_library_call();
     } else {
@@ -85,9 +86,9 @@ static void append_to_roman(char **romanp, const char *roman_value) {
 }
 
 static char * arabic_to_roman(int arabic) {
-    char *roman;
+    char *roman = malloc(NULL_BYTE_LENGTH);
 
-    if (NULL == (roman = malloc(NULL_BYTE_LENGTH)))
+    if (roman == NULL)
         not_test_driven_antisocial_process_exit_from_library_call();
 
     *roman = '\0';
