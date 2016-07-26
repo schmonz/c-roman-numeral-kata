@@ -70,8 +70,7 @@ static void not_test_driven_antisocial_process_exit_from_library_call(void) {
     err(EX_OSERR, NULL);
 }
 
-static void append_to_roman(char **romanp, const char *roman_value) {
-    char *roman = *romanp;
+static char * append_to_roman(char *roman, const char *roman_value) {
     size_t new_length = strlen(roman) + strlen(roman_value)
         + STRING_TERMINATOR_LENGTH;
 
@@ -81,9 +80,10 @@ static void append_to_roman(char **romanp, const char *roman_value) {
         not_test_driven_antisocial_process_exit_from_library_call();
     } else {
         roman = new_roman;
+        strcat(roman, roman_value);
     }
 
-    strcat(roman, roman_value);
+    return roman;
 }
 
 static char * arabic_to_roman(int arabic) {
@@ -92,14 +92,11 @@ static char * arabic_to_roman(int arabic) {
     if (roman == NULL)
         not_test_driven_antisocial_process_exit_from_library_call();
 
-    *roman = '\0';
+    strcpy(roman, "");
 
-    while (arabic > 0) {
-        for (size_t i = 0; i < A2R_LENGTH; i++) {
-            for (int j = A2R[i].arabic; arabic >= j; ) {
-                append_to_roman(&roman, arabic_increment_to_roman(j));
-                arabic -= j;
-            }
+    for (size_t i = 0; i < A2R_LENGTH; i++) {
+        for (int j = A2R[i].arabic; arabic >= j; arabic -= j) {
+            roman = append_to_roman(roman, arabic_increment_to_roman(j));
         }
     }
 
