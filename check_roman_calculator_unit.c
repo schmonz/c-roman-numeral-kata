@@ -59,6 +59,10 @@ START_TEST(test_subtractively_constructed_roman_numerals) {
     ck_assert_int_eq(  47, roman_to_arabic("XLVII"));
 } END_TEST
 
+START_TEST(test_nonexistent_arabic_increment) {
+    ck_assert_str_eq("ERROR_NO_ROMAN_INCREMENT", arabic_increment_to_roman(47));
+} END_TEST
+
 static void * exploding_malloc(size_t size) {
     (void)size;
     return NULL;
@@ -95,6 +99,10 @@ START_TEST(test_arabic_to_roman) {
     check_arabic_to_roman("MCMXCIX", 1999);
 } END_TEST
 
+START_TEST(test_nonexistent_roman_operation) {
+    ck_assert_str_eq("ERROR_NO_ROMAN_OPERATOR", roman_operation('&', "V", "I"));
+} END_TEST
+
 TCase* tcase_unit(void) {
     TCase *tc = tcase_create("Unit Tests");
 
@@ -104,9 +112,11 @@ TCase* tcase_unit(void) {
     tcase_add_test(tc, test_valid_roman_digits_to_arabic);
     tcase_add_test(tc, test_additively_constructed_roman_numerals);
     tcase_add_test(tc, test_subtractively_constructed_roman_numerals);
+    tcase_add_test(tc, test_nonexistent_arabic_increment);
     tcase_add_test(tc, test_arabic_to_roman_malloc_failure);
     tcase_add_test(tc, test_arabic_to_roman_realloc_failure);
     tcase_add_test(tc, test_arabic_to_roman);
+    tcase_add_test(tc, test_nonexistent_roman_operation);
 
     return tc;
 }

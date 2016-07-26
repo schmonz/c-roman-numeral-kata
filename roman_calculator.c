@@ -67,7 +67,7 @@ static const char * arabic_increment_to_roman(arabic_t arabic_increment) {
         if (arabic_increment == A2R[i].arabic)
             return A2R[i].roman;
 
-    return "";
+    return "ERROR_NO_ROMAN_INCREMENT";
 }
 
 static arabic_t roman_to_arabic(const char *roman) {
@@ -160,7 +160,7 @@ static char * roman_operation(char op, const char *roman1, const char *roman2) {
             }
             break;
         default:
-            return "";
+            return "ERROR_NO_ROMAN_OPERATOR";
             break;
     }
 }
