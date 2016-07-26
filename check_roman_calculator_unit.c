@@ -84,7 +84,7 @@ static void * exploding_realloc(void *pointer, size_t size) {
 }
 
 START_TEST(test_arabic_to_roman_realloc_failure) {
-    set_realloc(exploding_realloc, fake_free);
+    set_realloc(exploding_realloc, free);
     ck_assert_str_eq("ERROR_NO_REALLOC", arabic_to_roman(1));
     set_realloc(realloc, free);
 } END_TEST
