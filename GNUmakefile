@@ -15,8 +15,8 @@ check: ${THE_TESTS}
 	${SILENT}./${THE_TESTS}
 
 valgrind: check ${THE_TESTS} ${THE_PROGRAM}
-	${SILENT}valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=99 ./${THE_TESTS}
-	${SILENT}valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=88 ./${THE_PROGRAM} XIV + MCM
+	${SILENT}valgrind --leak-check=full --error-exitcode=99 ./${THE_TESTS} >/dev/null 2>&1
+	${SILENT}valgrind --leak-check=full --error-exitcode=88 ./${THE_PROGRAM} XIV + MCM >/dev/null 2>&1
 
 clean:
 	${SILENT}rm -f *.o ${THE_TESTS} ${THE_LIBRARY} ${THE_PROGRAM}
