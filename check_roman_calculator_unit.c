@@ -59,6 +59,32 @@ START_TEST(test_subtractively_constructed_roman_numerals) {
     ck_assert_int_eq(  47, roman_to_arabic("XLVII"));
 } END_TEST
 
+static void * exploding_malloc(size_t size) {
+    (void)size;
+    return NULL;
+}
+
+static void fake_free(void *pointer) {
+    (void)pointer;
+}
+
+START_TEST(test_arabic_to_roman_malloc_failure) {
+    set_malloc(exploding_malloc, fake_free);
+    ck_assert_str_eq("ERROR_NO_MALLOC", arabic_to_roman(1));
+    set_malloc(malloc, free);
+} END_TEST
+
+static void * exploding_realloc(void *pointer, size_t size) {
+    (void)pointer, (void)size;
+    return NULL;
+}
+
+START_TEST(test_arabic_to_roman_realloc_failure) {
+    set_realloc(exploding_realloc, fake_free);
+    ck_assert_str_eq("ERROR_NO_REALLOC", arabic_to_roman(1));
+    set_realloc(realloc, free);
+} END_TEST
+
 START_TEST(test_arabic_to_roman) {
     check_arabic_to_roman(      "I",    1);
     check_arabic_to_roman(     "VI",    6);
@@ -78,6 +104,8 @@ TCase* tcase_unit(void) {
     tcase_add_test(tc, test_valid_roman_digits_to_arabic);
     tcase_add_test(tc, test_additively_constructed_roman_numerals);
     tcase_add_test(tc, test_subtractively_constructed_roman_numerals);
+    tcase_add_test(tc, test_arabic_to_roman_malloc_failure);
+    tcase_add_test(tc, test_arabic_to_roman_realloc_failure);
     tcase_add_test(tc, test_arabic_to_roman);
 
     return tc;
