@@ -1,3 +1,5 @@
+SILENT		?= @
+
 THE_TESTS	=  check_roman_calculator
 THE_LIBRARY	=  roman_calculator.a
 THE_PROGRAM	=  romancalc
@@ -6,8 +8,6 @@ CFLAGS		+= -g -O0 -Wall -Werror -Wextra -std=c99
 TEST_CFLAGS	:= $(shell pkg-config --cflags check)
 TEST_LIBS	:= $(shell pkg-config --libs check)
 TEST_LIBS	+= -lm
-
-SILENT		=  @
 
 all: check
 
