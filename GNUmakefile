@@ -20,7 +20,7 @@ valgrind: check ${THE_TESTS} ${THE_PROGRAM}
 
 clean:
 	${SILENT}rm -f *.o ${THE_TESTS} ${THE_LIBRARY} ${THE_PROGRAM}
-	${SILENT}rm -rf *.dSYM
+	${SILENT}rm -rf *.dSYM *.gcda *.gcno *.gcov
 
 .PHONY: all check valgrind clean
 
