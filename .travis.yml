@@ -8,5 +8,6 @@ addons:
   apt:
     packages:
     - check
+    - valgrind
 
-script: make
+script: make valgrind
