@@ -1,27 +1,41 @@
 #include <check.h>
 
+#include <stdlib.h>
+
 #include "roman_calculator.c"
 
+static void check_normalize(const char *expected, const char *input) {
+    char* actual = normalize_roman(input);
+    ck_assert_str_eq(expected, actual);
+    free(actual);
+}
+
+static void check_arabic_to_roman(const char *expected, int input) {
+    char *actual = arabic_to_roman(input);
+    ck_assert_str_eq(expected, actual);
+    free(actual);
+}
+
 START_TEST(test_roman_contains_nonexistent_numerals) {
-    ck_assert_str_eq(                   "", normalize_roman("R"));
+    check_normalize("", "R");
     ck_assert_int_eq(INVALID_ROMAN_NUMERAL, roman_to_arabic("R"));
-    ck_assert_str_eq(                   "", normalize_roman("VIIR"));
+    check_normalize("", "VIIR");
     ck_assert_int_eq(INVALID_ROMAN_NUMERAL, roman_to_arabic("VIIR"));
 } END_TEST
 
 START_TEST(test_cant_have_more_than_three) {
-    ck_assert_str_eq("III", normalize_roman(  "III"));
-    ck_assert_str_eq( "IV", normalize_roman( "IIII"));
-    ck_assert_str_eq(  "V", normalize_roman("IIIII"));
-    ck_assert_str_eq( "XL", normalize_roman( "XXXX"));
-    ck_assert_str_eq( "CD", normalize_roman( "CCCC"));
+    check_normalize("III",   "III");
+    check_normalize( "IV",  "IIII");
+    check_normalize(  "V", "IIIII");
+    check_normalize( "XL",  "XXXX");
+    check_normalize( "CD",  "CCCC");
 } END_TEST
 
 START_TEST(test_cant_have_more_than_one) {
-    ck_assert_str_eq("V", normalize_roman( "V"));
-    ck_assert_str_eq("X", normalize_roman("VV"));
-    ck_assert_str_eq("C", normalize_roman("LL"));
-    ck_assert_str_eq("M", normalize_roman("DD"));
+    check_normalize("V",  "V");
+    check_normalize("X", "VV");
+    check_normalize("C", "LL");
+    check_normalize("M", "DD");
 } END_TEST
 
 START_TEST(test_valid_roman_digits_to_arabic) {
@@ -46,13 +60,13 @@ START_TEST(test_subtractively_constructed_roman_numerals) {
 } END_TEST
 
 START_TEST(test_arabic_to_roman) {
-    ck_assert_str_eq(arabic_to_roman(   1),       "I");
-    ck_assert_str_eq(arabic_to_roman(   6),      "VI");
-    ck_assert_str_eq(arabic_to_roman(   4),      "IV");
-    ck_assert_str_eq(arabic_to_roman(   9),      "IX");
-    ck_assert_str_eq(arabic_to_roman(  22),    "XXII");
-    ck_assert_str_eq(arabic_to_roman(  74),   "LXXIV");
-    ck_assert_str_eq(arabic_to_roman(1999), "MCMXCIX");
+    check_arabic_to_roman(      "I",    1);
+    check_arabic_to_roman(     "VI",    6);
+    check_arabic_to_roman(     "IV",    4);
+    check_arabic_to_roman(     "IX",    9);
+    check_arabic_to_roman(   "XXII",   22);
+    check_arabic_to_roman(  "LXXIV",   74);
+    check_arabic_to_roman("MCMXCIX", 1999);
 } END_TEST
 
 TCase* tcase_unit(void) {

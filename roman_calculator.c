@@ -108,7 +108,13 @@ static char * normalize_roman(const char *roman) {
 }
 
 static bool would_we_ever_construct_that_roman_number(const char *roman) {
-    return (0 == strcmp(roman, normalize_roman(roman)));
+    bool would_we;
+    char *normalized_roman = normalize_roman(roman);
+
+    would_we = (0 == strcmp(roman, normalized_roman));
+
+    free(normalized_roman);
+    return would_we;
 }
 
 static bool is_valid_roman(const char *roman) {

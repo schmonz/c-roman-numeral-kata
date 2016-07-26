@@ -1,8 +1,21 @@
 #include <check.h>
 
 #include <math.h>
+#include <stdlib.h>
 
 #include "roman_calculator.h"
+
+static void check_roman_add(const char *expected, const char *one, const char *two) {
+    char *actual = roman_add(one, two);
+    ck_assert_str_eq(expected, actual);
+    free(actual);
+}
+
+static void check_roman_subtract(const char *expected, const char *one, const char *two) {
+    char *actual = roman_subtract(one, two);
+    ck_assert_str_eq(expected, actual);
+    free(actual);
+}
 
 START_TEST(test_add_invalid_roman_numbers) {
     ck_assert_str_eq("INVALID", roman_add("V", "R"));
@@ -12,7 +25,7 @@ START_TEST(test_add_invalid_roman_numbers) {
 } END_TEST
 
 START_TEST(test_add_roman_no_such_thing_as_roman_overflow) {
-    ck_assert_str_eq("MMMMMMMMMMM", roman_add("MMMMM", "MMMMMM"));
+    check_roman_add("MMMMMMMMMMM", "MMMMM", "MMMMMM");
 } END_TEST
 
 START_TEST(test_yes_such_thing_as_c_overflow_and_underflow) {
@@ -34,8 +47,8 @@ START_TEST(test_yes_such_thing_as_c_overflow_and_underflow) {
 } END_TEST
 
 START_TEST(test_add_two_roman_numbers) {
-    ck_assert_str_eq("LXXIV", roman_add("XIV", "LX"));
-    ck_assert_str_eq( "XXII", roman_add( "XX", "II"));
+    check_roman_add("LXXIV", "XIV", "LX");
+    check_roman_add( "XXII",  "XX", "II");
 } END_TEST
 
 START_TEST(test_subtract_invalid_roman_numbers) {
@@ -48,7 +61,7 @@ START_TEST(test_subtract_roman_underflow) {
 } END_TEST
 
 START_TEST(test_subtract_two_roman_numbers) {
-    ck_assert_str_eq("XLVI", roman_subtract("LX", "XIV"));
+    check_roman_subtract("XLVI", "LX", "XIV");
 } END_TEST
 
 TCase* tcase_acceptance(void) {
