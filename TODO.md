@@ -1,10 +1,6 @@
 # Neat ideas
 
-- Test that we can't have four I (etc.) in a row.
-- Test overflow and underflow (both Roman and Arabic).
 - Maybe use a union for exception conditions?
-- Fix memory leaks found by Valgrind.
-- What are `.PHONY` and all that about?
 - Everything `uwe@` said.
 - Test that we handle `malloc` failure, via a fake like:
 
@@ -20,7 +16,6 @@
         total += n; return omalloc(n);
       }
   ```
-- Test that we `free` what we `malloc`.
 - Use `automake` and `autoconf`
 - Build the library with `libtool`.
 - Extract tests, library code, application code to separate subdirs.
