@@ -1,5 +1,6 @@
 # Neat ideas
 
+- Allocate and reallocate memory less often.
 - Maybe use a union for exception conditions?
 - Everything `uwe@` said.
 - Test that we handle `malloc` failure, via a fake like:
