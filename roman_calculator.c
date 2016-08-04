@@ -103,18 +103,14 @@ static char * normalize_roman(const char *roman) {
     return arabic_to_roman(roman_to_arabic(roman));
 }
 
-static bool would_we_ever_construct_that_roman_number(const char *roman) {
-    bool would_we;
+static bool is_valid_roman(const char *roman) {
+    bool valid;
     char *normalized_roman = normalize_roman(roman);
 
-    would_we = (0 == strcmp(roman, normalized_roman));
+    valid = (0 == strcmp(roman, normalized_roman));
 
     free(normalized_roman);
-    return would_we;
-}
-
-static bool is_valid_roman(const char *roman) {
-    return would_we_ever_construct_that_roman_number(roman);
+    return valid;
 }
 
 static char * roman_operation(char op, const char *roman1, const char *roman2) {
