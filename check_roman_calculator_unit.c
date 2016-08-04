@@ -38,6 +38,17 @@ START_TEST(test_cant_have_more_than_one) {
     check_normalize("M", "DD");
 } END_TEST
 
+START_TEST(test_document_behavior_on_other_malformed_roman_input) {
+    check_normalize(     "V",          "IIV");
+    check_normalize("CMXCIX",           "IM");
+    check_normalize(     "M",          "IIM");
+    check_normalize(    "MI",         "IIIM");
+    check_normalize(   "MII",        "IIIIM");
+    check_normalize(  "MIII",       "IIIIIM");
+    check_normalize(  "MXXI", "IVIVVIVIVIIM");
+    check_normalize(   "CML",           "LM");
+} END_TEST
+
 START_TEST(test_valid_roman_digits_to_arabic) {
     ck_assert_int_eq(   1, roman_to_arabic(    "I"));
     ck_assert_int_eq(   5, roman_to_arabic(    "V"));
@@ -83,6 +94,7 @@ TCase* tcase_unit(void) {
     tcase_add_test(tc, test_roman_contains_nonexistent_numerals);
     tcase_add_test(tc, test_cant_have_more_than_three);
     tcase_add_test(tc, test_cant_have_more_than_one);
+    tcase_add_test(tc, test_document_behavior_on_other_malformed_roman_input);
     tcase_add_test(tc, test_valid_roman_digits_to_arabic);
     tcase_add_test(tc, test_additively_constructed_roman_numerals);
     tcase_add_test(tc, test_subtractively_constructed_roman_numerals);
