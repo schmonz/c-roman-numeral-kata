@@ -8,12 +8,12 @@
 
 #define STRING_TERMINATOR_LENGTH 1
 
-struct a2r {
+struct arabic_roman_pair {
     const arabic_t arabic;
     const char *roman;
 };
 
-const struct a2r A2R[] = {
+const struct arabic_roman_pair PAIRS[] = {
     { 1000,  "M" },
     {  900, "CM" },
     {  500,  "D" },
@@ -28,7 +28,7 @@ const struct a2r A2R[] = {
     {    4, "IV" },
     {    1,  "I" }
 };
-const size_t A2R_LENGTH = sizeof(A2R) / sizeof(A2R[0]);
+const size_t PAIRS_LENGTH = sizeof(PAIRS) / sizeof(PAIRS[0]);
 
 struct memory_functions {
     void *(*malloc)(size_t size);
@@ -55,17 +55,17 @@ void set_realloc(void *another_realloc, void *another_free) {
 static arabic_t roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
-    for (size_t i = 0; i < A2R_LENGTH; i++)
-        if (0 == strcmp(as_string, A2R[i].roman))
-            return A2R[i].arabic;
+    for (size_t i = 0; i < PAIRS_LENGTH; i++)
+        if (0 == strcmp(as_string, PAIRS[i].roman))
+            return PAIRS[i].arabic;
 
     return INVALID_ROMAN_NUMERAL;
 }
 
 static const char * arabic_increment_to_roman(arabic_t arabic_increment) {
-    for (size_t i = 0; i < A2R_LENGTH; i++)
-        if (arabic_increment == A2R[i].arabic)
-            return A2R[i].roman;
+    for (size_t i = 0; i < PAIRS_LENGTH; i++)
+        if (arabic_increment == PAIRS[i].arabic)
+            return PAIRS[i].roman;
 
     return "ERROR_NO_ROMAN_INCREMENT";
 }
@@ -112,8 +112,8 @@ static char * arabic_to_roman(int arabic) {
 
     strcpy(roman, "");
 
-    for (size_t i = 0; i < A2R_LENGTH; i++) {
-        for (int j = A2R[i].arabic; arabic >= j; arabic -= j) {
+    for (size_t i = 0; i < PAIRS_LENGTH; i++) {
+        for (int j = PAIRS[i].arabic; arabic >= j; arabic -= j) {
             roman = append_to_roman(roman, arabic_increment_to_roman(j));
         }
     }
