@@ -1,5 +1,6 @@
 # Neat ideas
 
+- Choose a reasonable cross-compile workflow and merge the two makefiles.
 - Allocate and reallocate memory less often.
 - Maybe use a union for exception conditions?
 - Everything `uwe@` said.
