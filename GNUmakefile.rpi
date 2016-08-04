@@ -1,0 +1,9 @@
+TOOLDIR		= /Users/schmonz/rpi/tools
+
+CC		= ${TOOLDIR}/bin/armv6--netbsdelf-eabihf-gcc
+LD		= ${TOOLDIR}/bin/armv6--netbsdelf-eabihf-ld
+AR		= ${TOOLDIR}/bin/armv6--netbsdelf-eabihf-ar
+RANLIB		= ${TOOLDIR}/bin/armv6--netbsdelf-eabihf-ranlib
+CFLAGS		+= --sysroot=/Users/schmonz/rpi/distrib/evbearmv6hf-el
+
+include GNUmakefile
