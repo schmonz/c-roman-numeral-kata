@@ -30,28 +30,6 @@ const struct arabic_roman_pair PAIRS[] = {
 };
 const size_t PAIRS_LENGTH = sizeof(PAIRS) / sizeof(PAIRS[0]);
 
-struct memory_functions {
-    void *(*malloc)(size_t size);
-    void *(*realloc)(void *pointer, size_t size);
-    void (*free)(void *pointer);
-};
-
-static struct memory_functions my_memory = {
-    malloc,
-    realloc,
-    free,
-};
-
-void set_malloc(void *another_malloc, void *another_free) {
-    my_memory.malloc = another_malloc;
-    my_memory.free = another_free;
-}
-
-void set_realloc(void *another_realloc, void *another_free) {
-    my_memory.realloc = another_realloc;
-    my_memory.free = another_free;
-}
-
 static arabic_t roman_digit_to_arabic(const char roman_digit) {
     const char as_string[] = { roman_digit, '\0' };
 
@@ -92,9 +70,9 @@ static char * append_to_roman(char *roman, const char *roman_value) {
     size_t new_length = strlen(roman) + strlen(roman_value)
         + STRING_TERMINATOR_LENGTH;
 
-    char *new_roman = my_memory.realloc(roman, new_length);
+    char *new_roman = realloc(roman, new_length);
     if (new_roman == NULL) {
-        my_memory.free(roman);
+        free(roman);
         return "ERROR_NO_REALLOC";
     } else {
         roman = new_roman;
@@ -105,7 +83,7 @@ static char * append_to_roman(char *roman, const char *roman_value) {
 }
 
 static char * arabic_to_roman(int arabic) {
-    char *roman = my_memory.malloc(STRING_TERMINATOR_LENGTH);
+    char *roman = malloc(STRING_TERMINATOR_LENGTH);
 
     if (roman == NULL)
         return "ERROR_NO_MALLOC";
@@ -131,7 +109,7 @@ static bool would_we_ever_construct_that_roman_number(const char *roman) {
 
     would_we = (0 == strcmp(roman, normalized_roman));
 
-    my_memory.free(normalized_roman);
+    free(normalized_roman);
     return would_we;
 }
 

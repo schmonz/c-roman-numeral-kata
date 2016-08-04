@@ -63,32 +63,6 @@ START_TEST(test_nonexistent_arabic_increment) {
     ck_assert_str_eq("ERROR_NO_ROMAN_INCREMENT", arabic_increment_to_roman(47));
 } END_TEST
 
-static void * exploding_malloc(size_t size) {
-    (void)size;
-    return NULL;
-}
-
-static void fake_free(void *pointer) {
-    (void)pointer;
-}
-
-START_TEST(test_arabic_to_roman_malloc_failure) {
-    set_malloc(exploding_malloc, fake_free);
-    ck_assert_str_eq("ERROR_NO_MALLOC", arabic_to_roman(1));
-    set_malloc(malloc, free);
-} END_TEST
-
-static void * exploding_realloc(void *pointer, size_t size) {
-    (void)pointer, (void)size;
-    return NULL;
-}
-
-START_TEST(test_arabic_to_roman_realloc_failure) {
-    set_realloc(exploding_realloc, free);
-    ck_assert_str_eq("ERROR_NO_REALLOC", arabic_to_roman(1));
-    set_realloc(realloc, free);
-} END_TEST
-
 START_TEST(test_arabic_to_roman) {
     check_arabic_to_roman(      "I",    1);
     check_arabic_to_roman(     "VI",    6);
@@ -113,8 +87,6 @@ TCase* tcase_unit(void) {
     tcase_add_test(tc, test_additively_constructed_roman_numerals);
     tcase_add_test(tc, test_subtractively_constructed_roman_numerals);
     tcase_add_test(tc, test_nonexistent_arabic_increment);
-    tcase_add_test(tc, test_arabic_to_roman_malloc_failure);
-    tcase_add_test(tc, test_arabic_to_roman_realloc_failure);
     tcase_add_test(tc, test_arabic_to_roman);
     tcase_add_test(tc, test_nonexistent_roman_operation);
 
