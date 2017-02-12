@@ -1,22 +1,34 @@
 SILENT		?= @
 
+DEFAULT_SYSTEM	=  host
 THE_TESTS	=  check_roman_calculator
 THE_LIBRARY	=  roman_calculator.a
 THE_PROGRAM	=  romancalc
 
+TARGET_SYSTEM	?= ${DEFAULT_SYSTEM}
+ifeq (rpi, ${TARGET_SYSTEM})
+MAKE_TARGET	= ${THE_PROGRAM}
+TOOLDIR		?= ${HOME}/rpi/tools
+TARGET_PREFIX	= armv6--netbsdelf-eabihf-
+CFLAGS		+= --sysroot=${HOME}/rpi/distrib/evbearmv6hf-el
+else
+MAKE_TARGET	= check
 TOOLDIR		?= /usr
+TARGET_PREFIX	?=
+endif
 
-CC		?= ${TOOLDIR}/bin/gcc
-LD		?= ${TOOLDIR}/bin/ld
-AR		?= ${TOOLDIR}/bin/ar
-RANLIB		?= ${TOOLDIR}/bin/ranlib
+CC		= ${TOOLDIR}/bin/${TARGET_PREFIX}gcc
+LD		= ${TOOLDIR}/bin/${TARGET_PREFIX}ld
+AR		= ${TOOLDIR}/bin/${TARGET_PREFIX}ar
+RANLIB		= ${TOOLDIR}/bin/${TARGET_PREFIX}ranlib
 
 CFLAGS		+= -g -O0 -Wall -Werror -Wextra -std=c99
 TEST_CFLAGS	:= $(shell pkg-config --cflags check)
 TEST_LIBS	:= $(shell pkg-config --libs check)
 TEST_LIBS	+= -lm
 
-all: check
+all:
+	${SILENT}${MAKE} ${MAKE_TARGET}
 
 check: ${THE_TESTS}
 	${SILENT}./${THE_TESTS}
