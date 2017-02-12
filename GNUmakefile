@@ -8,9 +8,12 @@ THE_PROGRAM	=  romancalc
 TARGET_SYSTEM	?= ${DEFAULT_SYSTEM}
 ifeq (rpi, ${TARGET_SYSTEM})
 MAKE_TARGET	= ${THE_PROGRAM}
-TOOLDIR		?= ${HOME}/rpi/tools
+NETBSDSRCDIR	?= ${HOME}/Documents/trees/netbsd-src
+CROSS_ROOT	?= ${HOME}/rpi
+CROSS_ARCH	?= evbearmv6hf-el
+CFLAGS		+= --sysroot=${CROSS_ROOT}/distrib/${CROSS_ARCH}
+TOOLDIR		?= ${CROSS_ROOT}/tools
 TARGET_PREFIX	= armv6--netbsdelf-eabihf-
-CFLAGS		+= --sysroot=${HOME}/rpi/distrib/evbearmv6hf-el
 else
 MAKE_TARGET	= check
 TOOLDIR		?= /usr
@@ -29,6 +32,12 @@ TEST_LIBS	+= -lm
 
 all:
 	${SILENT}${MAKE} ${MAKE_TARGET}
+
+${NETBSDSRCDIR}:
+	${SILENT}mkdir -p ${NETBSDSRCDIR} && cd ${NETBSDSRCDIR} && git clone https://github.com/jsonn/src.git .
+
+${CC}: ${NETBSDSRCDIR}
+	${SILENT}cd ${NETBSDSRCDIR} && git checkout netbsd_7_0 && env PATH="/usr/local/bin:/opt/pkg/bin:/opt/pkg/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin" MAKECONF="/dev/null" ./build.sh -m ${CROSS_ARCH} -u -U -T ${TOOLDIR} -R ${CROSS_ROOT}/release -O ${CROSS_ROOT}/obj/${CROSS_ARCH} -D ${CROSS_ROOT}/distrib/${CROSS_ARCH} distribution
 
 check: ${THE_TESTS}
 	${SILENT}./${THE_TESTS}
