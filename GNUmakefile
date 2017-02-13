@@ -8,8 +8,9 @@ THE_PROGRAM	=  romancalc
 TARGET_SYSTEM	?= ${DEFAULT_SYSTEM}
 ifeq (rpi, ${TARGET_SYSTEM})
 MAKE_TARGET	= ${THE_PROGRAM}
-NETBSDSRCDIR	?= ${HOME}/Documents/trees/netbsd-src
-CROSS_ROOT	?= ${HOME}/rpi
+EXT_TREES_ROOT	?= ${HOME}/Documents/trees
+NETBSDSRCDIR	?= ${EXT_TREES_ROOT}/netbsd-src
+CROSS_ROOT	?= ${EXT_TREES_ROOT}/rpi
 CROSS_ARCH	?= evbearmv6hf-el
 CFLAGS		+= --sysroot=${CROSS_ROOT}/distrib/${CROSS_ARCH}
 TOOLDIR		?= ${CROSS_ROOT}/tools
@@ -30,7 +31,7 @@ TEST_CFLAGS	:= $(shell pkg-config --cflags check)
 TEST_LIBS	:= $(shell pkg-config --libs check)
 TEST_LIBS	+= -lm
 
-all:
+all: ${CC}
 	${SILENT}${MAKE} ${MAKE_TARGET}
 
 ${NETBSDSRCDIR}:
