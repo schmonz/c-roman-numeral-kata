@@ -1,6 +1,6 @@
 # Roman Numeral Calculator
 
-![Build Status](https://github.com/schmonz/c-roman-numeral-kata/actions/workflows/c-cpp.yml/badge.svg)
+[![Build status](https://github.com/schmonz/c-roman-numeral-kata/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/schmonz/c-roman-numeral-kata/actions/workflows/c-cpp.yml)
 
 For this kata, you will be creating a library which will allow the
 addition and subtraction of Roman numerals. You may limit the amount of
