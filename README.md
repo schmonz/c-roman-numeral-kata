@@ -59,7 +59,7 @@ So that I can do my work faster and with fewer mathematical errors.
 -----
 
 This Kata is based on the Roman Numeral Calculator Kata at
-<http://codingdojo.org/cgi-bin/index.pl?KataRomanCalculator>
+<https://codingdojo.org/kata/RomanNumerals/>
 
 Please submit your test-driven solution via a public Git repository
 (github/bitbucket).
